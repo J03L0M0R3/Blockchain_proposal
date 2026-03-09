@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAW Chain - Presentación DAO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5)); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.2)); }
+        }
+        .bg-animated {
+            background-size: 200% 200%;
+            animation: gradientBG 15s ease infinite;
+        }
+        .animate-fade-up {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        .animate-pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        
+        /* Scrollbar estético */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 bg-animated flex flex-col font-sans text-slate-800 overflow-hidden relative">
+
+    <!-- Background Decorative Blobs -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-300/30 mix-blend-multiply filter blur-3xl animate-float pointer-events-none z-0"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-300/30 mix-blend-multiply filter blur-3xl animate-float pointer-events-none z-0" style="animation-delay: 2s;"></div>
+
+    <!-- Top Navbar -->
+    <header class="bg-indigo-900/90 backdrop-blur-md text-white p-4 shadow-lg flex justify-between items-center shrink-0 z-50 border-b border-indigo-800">
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="goToSlide(-1)">
+            <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
+                <i data-lucide="paw-print" class="w-7 h-7 text-indigo-300 group-hover:text-white transition-colors"></i>
+            </div>
+            <h1 class="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-200 hidden sm:block">PAW CHAIN</h1>
+        </div>
+        <div class="flex items-center gap-2 sm:gap-4">
+            <button onclick="toggleAiModal(true)" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white hover:shadow-fuchsia-500/50 border border-fuchsia-400/50">
+                <i data-lucide="sparkles" class="w-4 h-4"></i>
+                Coach IA <span class="hidden sm:inline">✨</span>
+            </button>
+            <button id="toggleNotesBtn" onclick="toggleNotes()" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-white/10 text-indigo-100 hover:bg-white/20 border border-white/10">
+                <i data-lucide="lightbulb" id="notesIcon" class="w-4 h-4"></i>
+                <span id="notesBtnText">Modo Presentador</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <div class="flex flex-1 overflow-hidden z-10">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-64 bg-white/40 backdrop-blur-xl border-r border-white/50 hidden md:flex flex-col overflow-y-auto shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
+            <div class="p-5 text-xs font-black text-indigo-400 uppercase tracking-widest border-b border-white/50">Diapositivas</div>
+            <div id="sidebarMenu" class="flex flex-col">
+                <!-- Injected via JS -->
+            </div>
+        </aside>
+
+        <!-- Slide Display Area -->
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center relative">
+            
+            <!-- Glassmorphism Main Card -->
+            <div class="w-full max-w-5xl bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.07)] rounded-3xl overflow-hidden min-h-[65vh] flex flex-col border border-white relative z-10 transition-all duration-500">
+                
+                <!-- Dynamic Progress Bar -->
+                <div class="absolute top-0 left-0 h-1.5 bg-indigo-100 w-full z-20">
+                    <div id="progressBar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-700 ease-out" style="width: 0%;"></div>
+                </div>
+                
+                <!-- Dynamic Content Wrapper -->
+                <div id="slideContentWrapper" class="flex-1 flex flex-col h-full w-full">
+                    <!-- Slide content will be injected here -->
+                </div>
+            </div>
+
+            <!-- Navigation Controls Floating Bar (Matching User Screenshot) -->
+            <div class="w-full max-w-3xl flex justify-between items-center mt-8 z-20 bg-white/50 backdrop-blur-xl p-3 rounded-full border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.05)]">
+                <button id="prevBtn" onclick="prevSlide()" disabled class="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-600 font-bold transition-all duration-300 transform active:scale-95">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    Atrás
+                </button>
+                
+                <!-- Dots indicator -->
+                <div id="paginationDots" class="flex gap-1.5 px-4 hidden sm:flex items-center">
+                    <!-- Injected via JS -->
+                </div>
+                
+                <button id="nextBtn" onclick="nextSlide()" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-indigo-500/30 disabled:opacity-40 disabled:cursor-not-allowed font-bold transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95">
+                    Siguiente
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- AI Coach Modal -->
+    <div id="aiModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-indigo-900/40 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300" id="aiModalContent">
+            <div class="bg-gradient-to-r from-fuchsia-600 to-purple-700 p-6 flex justify-between items-center text-white">
+                <div class="flex items-center gap-3">
+                    <div class="bg-white/20 p-2 rounded-xl backdrop-blur-md">
+                        <i data-lucide="bot" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-xl flex items-center gap-2">Coach IA para la DAO ✨</h3>
+                        <p class="text-fuchsia-100 text-sm">Simula preguntas difíciles y prepara tu defensa.</p>
+                    </div>
+                </div>
+                <button onclick="toggleAiModal(false)" class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8 flex-1 overflow-y-auto bg-slate-50/50">
+                <label class="block text-sm font-bold text-slate-700 mb-2">
+                    ¿Qué objeción o pregunta te haría la DAO?
+                </label>
+                <div class="flex gap-3">
+                    <input type="text" id="aiQueryInput" placeholder="Ej: ¿Por qué usar blockchain si una base de datos normal sirve?" class="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500 outline-none transition-shadow">
+                    <button id="aiAskBtn" onclick="handleAskAI()" class="bg-purple-600 hover:bg-purple-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 shadow-md">
+                        <span id="aiBtnText">Preguntar</span>
+                        <i data-lucide="loader-2" id="aiLoadingIcon" class="w-5 h-5 animate-spin hidden"></i>
+                    </button>
+                </div>
+
+                <div id="aiResponseContainer" class="mt-6 bg-white p-6 rounded-2xl border border-fuchsia-100 shadow-[0_4px_20px_-10px_rgba(192,38,211,0.2)] relative animate-fade-up hidden">
+                    <div class="absolute -top-3 left-6 bg-fuchsia-100 text-fuchsia-800 text-xs font-bold px-3 py-1 rounded-full border border-fuchsia-200">
+                        Respuesta Sugerida
+                    </div>
+                    <div id="aiResponseText" class="text-slate-700 leading-relaxed whitespace-pre-line mt-2 text-sm md:text-base">
+                        <!-- AI Response will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Structure
+        const presentationData = {
+            cover: {
+                title: "PAW Chain",
+                subtitle: "Pilot for Decentralized Pet Identity within the EGADE Community",
+                course: "MT5057.60 - Blockchain and Non-Fungible Token Applications",
+                professor: "Saswat Kumar Sahu",
+                date: "Marzo 2026",
+                team: [
+                    "Tania Cordero Romero (A00922778)",
+                    "Emmanuel Herrera Pereda",
+                    "Joél Moreno Gregorio",
+                    "Jaime Rendón Morones",
+                    "Brenda Berenice Meza Suástegui (A01330107)"
+                ]
+            },
+            slides: [
+                {
+                    title: "1. Project Summary",
+                    icon: "file-text",
+                    formalText: `
+                        <div class="space-y-4">
+                            <p class="animate-fade-up delay-100"><strong>PAW Chain</strong> is a pilot project that proposes the design and testing of a decentralized pet identity system within the <strong>EGADE Business School community</strong>. The objective is to explore how blockchain technology and DAO governance principles can be applied to solve a real problem: the fragmentation and lack of verifiable pet identity records.</p>
+                            <p class="animate-fade-up delay-200">In this pilot, pets owned by members of the EGADE community could receive a digital identity represented on blockchain. This identity would contain essential pet information, proof of ownership, and selected veterinary records in a verifiable format.</p>
+                            <p class="animate-fade-up delay-300">Rather than launching a full commercial solution, the project is intentionally scoped as a <strong>controlled academic and community-based pilot</strong>. This allows the team to test technological feasibility, user adoption, governance participation, and practical value in a trusted environment before considering scale.</p>
+                            <ul class="list-disc pl-5 mt-4 space-y-2 animate-fade-up delay-400">
+                                <li class="hover:text-indigo-600 transition-colors"><strong>Blockchain application:</strong> use of NFT/DID concepts for pet identity.</li>
+                                <li class="hover:text-indigo-600 transition-colors"><strong>Practical utility:</strong> verifiable records and ownership tracking.</li>
+                                <li class="hover:text-indigo-600 transition-colors"><strong>DAO logic:</strong> community participation in defining standards, validation rules, and future evolution of the system.</li>
+                            </ul>
+                        </div>`,
+                    speakerNotes: `
+                        <div class="space-y-2">
+                            <p class="animate-fade-up delay-100"><strong>Qué significa esto en términos simples:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 animate-fade-up delay-200">
+                                <li><strong>No vendemos una "app para mascotas":</strong> Proponemos un piloto de identidad digital descentralizada. El valor está en demostrar que blockchain resuelve confianza y trazabilidad.</li>
+                                <li><strong>Limitado a EGADE:</strong> Hace el proyecto realista, evita sonar demasiado ambicioso y justifica un entorno controlado.</li>
+                                <li><strong>No prometemos lo imposible:</strong> Es un pilot project, no una plataforma global. Mejor prometer poco y bien definido, que mucho y sin viabilidad.</li>
+                            </ul>
+                        </div>`
+                },
+                {
+                    title: "2. Problem Statement",
+                    icon: "target",
+                    formalText: `
+                        <div class="space-y-4">
+                            <p class="animate-fade-up delay-100">Today, pet-related information is typically stored across disconnected systems and non-standardized formats. Vaccination records may be kept in paper form, veterinary history may remain locked inside individual clinics, and proof of ownership is often difficult to verify or transfer reliably.</p>
+                            <p class="animate-fade-up delay-200">This creates practical inefficiencies and trust problems. A pet owner may struggle to prove ownership, consolidate health history, or share verified records when traveling, relocating, using a pet service, or engaging in adoption or transfer processes.</p>
+                            <p class="animate-fade-up delay-300">Within a community such as EGADE, where members tend to be digitally literate, mobile, and open to innovation, this problem offers an opportunity to test whether a blockchain-based identity layer can improve trust, accessibility, and traceability of pet data.</p>
+                            <div class="bg-indigo-50/80 backdrop-blur-sm p-5 rounded-xl border border-indigo-200 mt-6 text-indigo-900 font-medium animate-fade-up delay-400 shadow-[0_4px_20px_-10px_rgba(79,70,229,0.3)] hover:scale-[1.02] transition-transform duration-300">
+                                <i data-lucide="sparkles" class="inline w-5 h-5 mr-2 text-indigo-500 mb-1"></i>
+                                The core problem is not merely the lack of information, but rather the absence of a shared, verifiable, and portable pet identity system.
+                            </div>
+                        </div>`,
+                    speakerNotes: `
+                        <div class="space-y-2">
+                            <p class="animate-fade-up delay-100"><strong>Cómo explicarlo al equipo (El problema real):</strong></p>
+                            <p class="animate-fade-up delay-200">El problema <strong>NO</strong> es: "no hay apps de mascotas" o "la gente no cuida a sus mascotas".</p>
+                            <p class="animate-fade-up delay-300">El problema <strong>SÍ</strong> es: La información existe, pero está dispersa, no estandarizada, difícil de compartir/verificar y poco portable.</p>
+                            <p class="animate-fade-up delay-400 mt-2"><strong>Ejemplos concretos a mencionar:</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 animate-fade-up delay-500">
+                                <li>Si se pierde la cartilla física, se pierde el historial visible.</li>
+                                <li>Cambio de veterinario = pérdida de acceso confiable al historial.</li>
+                                <li>En adopciones o cambios de dueño, no hay forma simple y verificable de rastrear el cambio.</li>
+                            </ul>
+                        </div>`
+                },
+                {
+                    title: "3. Why EGADE",
+                    icon: "users",
+                    formalText: `
+                        <div class="space-y-4">
+                            <p class="animate-fade-up delay-100">EGADE is an appropriate initial environment for this pilot because it offers a <strong>small but credible test community</strong> with characteristics that support innovation adoption:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                                <div class="animate-fade-up delay-200 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
+                                    <span class="font-medium text-slate-700">relatively high digital literacy</span>
+                                </div>
+                                <div class="animate-fade-up delay-300 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
+                                    <span class="font-medium text-slate-700">openness to emerging technologies</span>
+                                </div>
+                                <div class="animate-fade-up delay-400 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
+                                    <span class="font-medium text-slate-700">capacity to participate in governance experiments</span>
+                                </div>
+                                <div class="animate-fade-up delay-500 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
+                                    <span class="font-medium text-slate-700">trust-based relationships within the community</span>
+                                </div>
+                            </div>
+                            <p class="mt-6 animate-fade-up delay-[600ms]">By starting with EGADE, PAW Chain can validate its assumptions in a manageable environment before considering broader adoption beyond academia.</p>
+                            <p class="animate-fade-up delay-[700ms]">This approach reduces implementation complexity while increasing the probability of meaningful feedback, iterative improvement, and documented learning outcomes.</p>
+                        </div>`,
+                    speakerNotes: `
+                        <div class="space-y-2">
+                            <p class="animate-fade-up delay-100"><strong>Por qué esto conviene estratégicamente:</strong></p>
+                            <p class="animate-fade-up delay-200">Este punto no es decorativo. Justifica por qué empezamos pequeño.</p>
+                            <p class="animate-fade-up delay-300"><strong>Argumento fuerte para el profesor/DAO:</strong> "No queremos construir primero para todo el mercado pet". Queremos probar en una comunidad con alta probabilidad de entender Web3, donde podemos entrevistar usuarios reales y conseguir feedback con menor fricción.</p>
+                            <p class="animate-fade-up delay-400 text-indigo-800 bg-indigo-100/50 p-2 rounded mt-2">Demuestra criterio de innovación: <em>primero validar en un nicho controlado, luego escalar.</em></p>
+                        </div>`
+                },
+                {
+                    title: "4. Project Scope",
+                    icon: "target",
+                    formalText: `
+                        <div class="space-y-4">
+                            <p class="animate-fade-up delay-100">The PAW Chain pilot will be limited to the following scope to ensure technical feasibility and educational value:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                                <div class="bg-gradient-to-br from-green-50 to-emerald-100/50 p-6 rounded-2xl border border-green-200 shadow-sm animate-fade-up delay-200 hover:shadow-md transition-shadow">
+                                    <h4 class="font-bold text-green-800 flex items-center gap-2 mb-4 text-lg border-b border-green-200 pb-2">
+                                        <i data-lucide="check-circle-2" class="w-6 h-6"></i> Included in scope
+                                    </h4>
+                                    <ul class="space-y-3 text-sm text-green-900">
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> registration of participating pet owners from the EGADE community</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> creation of a blockchain-linked digital identity for pets</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> generation of a QR code linked to the pet identity</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> storage of selected pet metadata</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> basic proof of ownership linked to a wallet</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> limited veterinary record registration</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> demonstration of ownership transfer</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> governance simulation through community voting tools</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gradient-to-br from-red-50 to-rose-100/50 p-6 rounded-2xl border border-red-200 shadow-sm animate-fade-up delay-300 hover:shadow-md transition-shadow">
+                                    <h4 class="font-bold text-red-800 flex items-center gap-2 mb-4 text-lg border-b border-red-200 pb-2">
+                                        <i data-lucide="x-circle" class="w-6 h-6"></i> Excluded from scope
+                                    </h4>
+                                    <ul class="space-y-3 text-sm text-red-900">
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> full integration with professional veterinary software</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> formal legal recognition of pet identity records</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> commercial launch to the broader public</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> advanced tokenomics</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> real insurance integration</li>
+                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> real-time geolocation or lost-pet tracking</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>`,
+                    speakerNotes: `
+                        <div class="space-y-2">
+                            <p class="animate-fade-up delay-100"><strong>Qué SÍ podemos hacer (Lo importante):</strong></p>
+                            <ul class="list-disc pl-5 space-y-1 text-sm animate-fade-up delay-200">
+                                <li>Identidad digital por mascota (NFT/DID simplificado).</li>
+                                <li>Asociar a dueño mediante wallet (ej. wallet A = dueño, NFT 001 = mascota).</li>
+                                <li>Generar un QR que apunte a metadata básica (verificable en vivo).</li>
+                                <li>Cargar registros veterinarios simples (simulación, no integración profunda).</li>
+                                <li>Simular transferencia.</li>
+                                <li>Simular gobernanza con Snapshot.</li>
+                            </ul>
+                            <p class="mt-4 text-red-700 font-medium bg-red-50 p-2 rounded border border-red-200 animate-fade-up delay-300"><strong>No prometer:</strong> Integraciones reales con clínicas, validez legal formal o seguros pet. Es un MVP académico.</p>
+                        </div>`
+                },
+                {
+                    title: "5 & 6. Core Solution Design",
+                    icon: "shield-check",
+                    formalText: `
+                        <div class="space-y-6">
+                            <p class="animate-fade-up delay-100">PAW Chain’s solution is based on the concept of a portable, verifiable pet identity. The system functions through four core components:</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
+                                <div class="animate-fade-up delay-200 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-indigo-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                                    <h4 class="font-bold text-indigo-900 text-lg">A. Digital Identity Token</h4>
+                                    <p class="text-sm mt-2 text-slate-600">Each pet receives a unique blockchain-linked identity, represented as an NFT or equivalent identity asset.</p>
+                                </div>
+                                <div class="animate-fade-up delay-300 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-purple-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                                    <h4 class="font-bold text-purple-900 text-lg">B. Metadata Layer</h4>
+                                    <p class="text-sm mt-2 text-slate-600">The identity token references essential structured data, such as pet profile, ownership information, and selected records.</p>
+                                </div>
+                                <div class="animate-fade-up delay-400 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-blue-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                                    <h4 class="font-bold text-blue-900 text-lg">C. Verification Layer</h4>
+                                    <p class="text-sm mt-2 text-slate-600">A QR code enables simple viewing and verification of identity information in real-world interactions.</p>
+                                </div>
+                                <div class="animate-fade-up delay-500 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-teal-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+                                    <h4 class="font-bold text-teal-900 text-lg">D. Governance Layer</h4>
+                                    <p class="text-sm mt-2 text-slate-600">The community participates in defining standards and validation rules through DAO-style decision-making processes.</p>
+                                </div>
+                            </div>
+                            <div class="animate-fade-up delay-[600ms] mt-8 bg-slate-50/50 p-6 rounded-2xl border border-slate-200">
+                                <h3 class="font-bold text-lg mb-4 text-slate-800">What We Can Actually Build (Deliverables):</h3>
+                                <ul class="flex flex-wrap gap-2">
+                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Pet identity registration flow</li>
+                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Blockchain-linked identity asset</li>
+                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">QR-based verification page</li>
+                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Basic owner wallet verification</li>
+                                </ul>
+                            </div>
+                        </div>`,
+                    speakerNotes: `
+                        <div class="space-y-2">
+                            <p class="animate-fade-up delay-100"><strong>Explicación Operativa (Para la Demo):</strong></p>
+                            <ul class="list-disc pl-5 space-y-2 text-sm animate-fade-up delay-200">
+                                <li><span class="bg-indigo-100 text-indigo-800 px-1 rounded">El Token:</span> Es el contenedor. Puede ser un NFT simple en Testnet o Base Sepolia.</li>
+                                <li><span class="bg-purple-100 text-purple-800 px-1 rounded">Metadata:</span> JSON o IPFS con datos básicos (Raza, color, año de nac.).</li>
+                                <li><span class="bg-blue-100 text-blue-800 px-1 rounded font-bold">Verification (EL QR ES CLAVE):</span> Aquí es donde el proyecto cobra vida. Si muestras que escaneando un QR se ve el perfil verificado del perrito en vivo, ganas la presentación.</li>
+                                <li><span class="bg-teal-100 text-teal-800 px-1 rounded">Registros Vet:</span> Es una simulación. Capturaremos: tipo de vacuna, fecha, etc.</li>
+                            </ul>
+                        </div>`
+                }
+                // Adding only a few slides for brevity, but enough to show pagination correctly
+            ]
+        };
+
+        // Application State
+        let currentSlideIndex = -1; // -1 is Cover Slide
+        let showNotes = false;
+        let isAiLoading = false;
+
+        // DOM Elements
+        const slideContentWrapper = document.getElementById('slideContentWrapper');
+        const sidebarMenu = document.getElementById('sidebarMenu');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const paginationDots = document.getElementById('paginationDots');
+        const progressBar = document.getElementById('progressBar');
+        const toggleNotesBtn = document.getElementById('toggleNotesBtn');
+        const notesIcon = document.getElementById('notesIcon');
+        const notesBtnText = document.getElementById('notesBtnText');
+        const aiModal = document.getElementById('aiModal');
+        const aiModalContent = document.getElementById('aiModalContent');
+        const aiQueryInput = document.getElementById('aiQueryInput');
+        const aiResponseContainer = document.getElementById('aiResponseContainer');
+        const aiResponseText = document.getElementById('aiResponseText');
+        const aiAskBtn = document.getElementById('aiAskBtn');
+        const aiBtnText = document.getElementById('aiBtnText');
+        const aiLoadingIcon = document.getElementById('aiLoadingIcon');
+
+        // Initialization
+        function init() {
+            renderSidebar();
+            renderSlide();
+            
+            // Add input event listener for Enter key on AI input
+            aiQueryInput.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') handleAskAI();
+            });
+        }
+
+        // Render functions
+        function renderSidebar() {
+            let html = `
+                <button onclick="goToSlide(-1)" class="text-left px-5 py-4 border-l-4 transition-all duration-300 ${currentSlideIndex === -1 ? 'border-indigo-600 bg-white/60 text-indigo-900 font-bold shadow-sm' : 'border-transparent text-slate-500 hover:bg-white/40 hover:text-indigo-600'}">
+                    0. Portada
+                </button>
+            `;
+            
+            presentationData.slides.forEach((slide, idx) => {
+                const isActive = currentSlideIndex === idx;
+                const shortTitle = slide.title.split('.')[1] || slide.title;
+                html += `
+                    <button onclick="goToSlide(${idx})" class="text-left px-5 py-4 border-l-4 flex items-center gap-3 transition-all duration-300 ${isActive ? 'border-indigo-600 bg-white/60 text-indigo-900 font-bold shadow-sm' : 'border-transparent text-slate-500 hover:bg-white/40 hover:text-indigo-600'}">
+                        <i data-lucide="${slide.icon}" class="w-4 h-4 transition-colors duration-300 ${isActive ? 'text-indigo-600' : 'text-slate-400'}"></i>
+                        <span class="truncate text-sm">${shortTitle}</span>
+                    </button>
+                `;
+            });
+            sidebarMenu.innerHTML = html;
+        }
+
+        function renderSlide() {
+            // Update Progress
+            const progress = currentSlideIndex === -1 ? 0 : ((currentSlideIndex + 1) / presentationData.slides.length) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            if (currentSlideIndex === -1) {
+                // Render Cover
+                slideContentWrapper.innerHTML = `
+                    <div class="flex-1 flex flex-col items-center justify-center p-12 text-center h-full relative overflow-hidden rounded-3xl">
+                        <!-- Subtle inner grid bg -->
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoOTksIDEwMiwgMjQxLCAwLjE1KSIvPjwvc3ZnPg==')] opacity-50 z-0 pointer-events-none"></div>
+
+                        <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-[2rem] mb-8 text-white shadow-2xl animate-pulse-glow z-10 transform hover:scale-105 transition-transform duration-500">
+                            <i data-lucide="paw-print" class="w-24 h-24"></i>
+                        </div>
+                        
+                        <h2 class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-900 to-purple-900 mb-6 animate-fade-up delay-100 drop-shadow-sm z-10 tracking-tight">
+                            ${presentationData.cover.title}
+                        </h2>
+                        
+                        <h3 class="text-xl md:text-2xl text-slate-600 font-medium mb-10 max-w-2xl animate-fade-up delay-200 z-10 leading-relaxed">
+                            ${presentationData.cover.subtitle}
+                        </h3>
+                        
+                        <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-300 to-purple-300 rounded-full mb-10 animate-fade-up delay-300 z-10"></div>
+                        
+                        <div class="flex flex-col md:flex-row gap-8 items-center justify-center animate-fade-up delay-400 z-10 w-full max-w-4xl">
+                            <div class="bg-white/80 backdrop-blur-md px-8 py-6 rounded-2xl shadow-lg border border-white/50 w-full md:w-1/2 hover:-translate-y-2 transition-transform duration-500">
+                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mb-1">Course</p>
+                                <p class="font-semibold text-slate-800">${presentationData.cover.course}</p>
+                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mt-4 mb-1">Professor</p>
+                                <p class="font-semibold text-slate-800">${presentationData.cover.professor}</p>
+                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mt-4 mb-1">Date</p>
+                                <p class="font-semibold text-slate-800">${presentationData.cover.date}</p>
+                            </div>
+
+                            <div class="bg-white/80 backdrop-blur-md px-8 py-6 rounded-2xl shadow-lg border border-white/50 w-full md:w-1/2 hover:-translate-y-2 transition-transform duration-500">
+                                <p class="font-black text-indigo-900 mb-4 border-b border-indigo-100 pb-3 flex items-center justify-center gap-2">
+                                    <i data-lucide="users" class="w-5 h-5 text-indigo-500"></i> Team 3
+                                </p>
+                                <ul class="text-sm font-medium text-slate-600 space-y-2 text-left">
+                                    ${presentationData.cover.team.map(member => `
+                                        <li class="flex items-center gap-2">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>${member}
+                                        </li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Render Content Slide
+                const slide = presentationData.slides[currentSlideIndex];
+                slideContentWrapper.innerHTML = `
+                    <div class="flex-1 flex flex-col h-full overflow-hidden">
+                        <!-- Formal Content Area -->
+                        <div id="formalContentArea" class="p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${showNotes ? 'h-[60%] border-b border-indigo-100/50 bg-white/40' : 'h-full bg-white/20'}">
+                            <div class="flex items-center gap-4 border-b-2 border-indigo-100 pb-6 mb-8 animate-fade-up">
+                                <div class="bg-indigo-100 p-3 rounded-2xl text-indigo-600 shadow-inner">
+                                    <i data-lucide="${slide.icon}" class="w-8 h-8"></i>
+                                </div>
+                                <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">
+                                    ${slide.title}
+                                </h2>
+                            </div>
+                            <div class="text-lg leading-relaxed text-slate-700 font-medium">
+                                ${slide.formalText}
+                            </div>
+                        </div>
+
+                        <!-- Speaker Notes Drawer (Animated entrance) -->
+                        <div id="notesDrawer" class="transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden bg-gradient-to-b from-amber-50/90 to-orange-50/90 backdrop-blur-xl border-t border-amber-200/50 ${showNotes ? 'h-[40%] min-h-[250px] opacity-100' : 'h-0 opacity-0 hidden'}">
+                            <div class="h-full p-6 md:p-8 overflow-y-auto">
+                                <h3 class="flex items-center gap-3 font-black text-amber-900 mb-5 text-lg uppercase tracking-wider">
+                                    <div class="bg-amber-400 p-1.5 rounded-lg text-amber-950">
+                                        <i data-lucide="lightbulb" class="w-5 h-5"></i> 
+                                    </div>
+                                    Estrategia de Venta (No mostrar a la DAO)
+                                </h3>
+                                <div class="text-amber-900 bg-white/80 backdrop-blur p-6 rounded-2xl shadow-sm border border-amber-200/60 font-medium leading-relaxed">
+                                    ${slide.speakerNotes}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Update Navigation logic
+            updateNavigation();
+            
+            // Render Icons
+            lucide.createIcons();
+        }
+
+        // --- SPECIFIC: The Bottom Navigation Bar logic ---
+        function updateNavigation() {
+            // Disable/Enable buttons
+            prevBtn.disabled = currentSlideIndex === -1;
+            nextBtn.disabled = currentSlideIndex === presentationData.slides.length - 1;
+
+            // Generate the exact dots logic from React
+            let dotsHtml = '';
+            
+            // First dot (Cover indicator)
+            dotsHtml += `<div class="w-2.5 h-2.5 rounded-full transition-all duration-500 ${currentSlideIndex === -1 ? 'bg-indigo-600 w-6' : 'bg-slate-300'}"></div>`;
+            
+            // Slide dots
+            presentationData.slides.forEach((_, i) => {
+                dotsHtml += `<div class="w-2.5 h-2.5 rounded-full transition-all duration-500 ${currentSlideIndex === i ? 'bg-indigo-600 w-6' : 'bg-slate-300'}"></div>`;
+            });
+            
+            paginationDots.innerHTML = dotsHtml;
+        }
+
+        // Actions
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            renderSidebar();
+            renderSlide();
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < presentationData.slides.length - 1) {
+                goToSlide(currentSlideIndex + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > -1) {
+                goToSlide(currentSlideIndex - 1);
+            }
+        }
+
+        function toggleNotes() {
+            showNotes = !showNotes;
+            
+            // Toggle button styles manually
+            if (showNotes) {
+                toggleNotesBtn.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-gradient-to-r from-amber-400 to-orange-400 text-amber-950 shadow-amber-400/50";
+                notesIcon.classList.add('animate-pulse');
+                notesBtnText.textContent = "Ocultar Estrategia";
+            } else {
+                toggleNotesBtn.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-white/10 text-indigo-100 hover:bg-white/20 border border-white/10";
+                notesIcon.classList.remove('animate-pulse');
+                notesBtnText.textContent = "Modo Presentador";
+            }
+            
+            // Re-render slide to apply classes
+            if(currentSlideIndex >= 0) {
+                 const formalContentArea = document.getElementById('formalContentArea');
+                 const notesDrawer = document.getElementById('notesDrawer');
+                 
+                 if(showNotes){
+                     formalContentArea.className = "p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] h-[60%] border-b border-indigo-100/50 bg-white/40";
+                     notesDrawer.classList.remove('hidden', 'h-0', 'opacity-0');
+                     notesDrawer.classList.add('h-[40%]', 'min-h-[250px]', 'opacity-100');
+                 } else {
+                     formalContentArea.className = "p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] h-full bg-white/20";
+                     notesDrawer.classList.add('h-0', 'opacity-0');
+                     notesDrawer.classList.remove('h-[40%]', 'min-h-[250px]', 'opacity-100');
+                     setTimeout(() => { if(!showNotes) notesDrawer.classList.add('hidden'); }, 700);
+                 }
+            }
+        }
+
+        function toggleAiModal(isOpen) {
+            if (isOpen) {
+                aiModal.classList.remove('hidden');
+                // Allow display to register before fading in
+                setTimeout(() => {
+                    aiModal.classList.remove('opacity-0');
+                    aiModalContent.classList.remove('scale-95');
+                }, 10);
+                aiQueryInput.focus();
+            } else {
+                aiModal.classList.add('opacity-0');
+                aiModalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    aiModal.classList.add('hidden');
+                }, 300);
+            }
+        }
+
+        // Gemini API Logic
+        const fetchWithRetry = async (url, options, retries = 5, delay = 1000) => {
+            try {
+                const res = await fetch(url, options);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return await res.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithRetry(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        };
+
+        async function handleAskAI() {
+            const query = aiQueryInput.value.trim();
+            if (!query) return;
+
+            isAiLoading = true;
+            aiAskBtn.disabled = true;
+            aiLoadingIcon.classList.remove('hidden');
+            aiBtnText.textContent = "Pensando...";
+            aiResponseContainer.classList.add('hidden');
+            aiResponseText.innerHTML = "";
+
+            const apiKey = "";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+            const projectContext = `
+                Proyecto: PAW Chain - Identidad Descentralizada para Mascotas (Piloto EGADE).
+                Problema: Registros fragmentados y difíciles de verificar.
+                Solución: Identidad digital blockchain (NFT/DID), QR, registros veterinarios básicos.
+                Estrategia: Vender como piloto académico controlado, no app comercial.
+            `;
+
+            const promptText = `
+                Eres un "Coach de Presentaciones DAO".
+                Contexto: ${projectContext}
+                Objeción: "${query}"
+                Instrucción: Sugiere una respuesta persuasiva (español) basándote en la estrategia. Máximo 2 párrafos.
+            `;
+
+            const payload = {
+                contents: [{ parts: [{ text: promptText }] }],
+                systemInstruction: { parts: [{ text: "Eres un coach directo y experto." }] }
+            };
+
+            try {
+                const data = await fetchWithRetry(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No pude procesar una respuesta.";
+                aiResponseText.textContent = text;
+                aiResponseContainer.classList.remove('hidden');
+            } catch (error) {
+                console.error(error);
+                aiResponseText.textContent = "Error de conexión con el Coach IA.";
+                aiResponseContainer.classList.remove('hidden');
+            } finally {
+                isAiLoading = false;
+                aiAskBtn.disabled = false;
+                aiLoadingIcon.classList.add('hidden');
+                aiBtnText.textContent = "Preguntar";
+            }
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>
