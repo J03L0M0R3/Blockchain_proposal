@@ -1,689 +1,678 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAW Chain - Presentación DAO</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>PAW Chain - DAO Proposal</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Graphics/Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @keyframes fadeUp {
-            0% { opacity: 0; transform: translateY(30px) scale(0.98); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+        :root {
+            --bg-color: #0B0E14;
+            --surface-color: #151A25;
+            --primary: #627EEA; /* Ethereum Blue */
+            --secondary: #8B5CF6; /* Vibrant Purple */
+            --accent: #10B981; /* Success Green */
+            --text-main: #F3F4F6;
+            --text-muted: #9CA3AF;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+            --sidebar-width: 280px;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
         }
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5)); }
-            50% { opacity: 0.8; filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.2)); }
+
+        h1, h2, h3, h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #FFFFFF;
         }
-        .bg-animated {
-            background-size: 200% 200%;
-            animation: gradientBG 15s ease infinite;
+
+        a {
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
-        .animate-fade-up {
-            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            opacity: 0;
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: rgba(21, 26, 37, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            padding: 32px 0;
         }
-        .animate-pulse-glow {
-            animation: pulseGlow 3s ease-in-out infinite;
+
+        .nav-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 32px;
+            margin-bottom: 40px;
         }
-        .delay-100 { animation-delay: 100ms; }
-        .delay-200 { animation-delay: 200ms; }
-        .delay-300 { animation-delay: 300ms; }
-        .delay-400 { animation-delay: 400ms; }
-        .delay-500 { animation-delay: 500ms; }
+
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 0 16px;
+        }
+
+        .nav-links button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-align: left;
+            padding: 16px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links button:hover {
+            color: var(--text-main);
+            background: var(--glass-bg);
+        }
+
+        .nav-links button.active {
+            background: linear-gradient(90deg, rgba(98, 126, 234, 0.15), transparent);
+            color: var(--primary);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .nav-links button i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex: 1;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Tab Content Logic */
+        .tab-pane {
+            display: none;
+            padding: 60px 80px;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        /* --- DYNAMIC TRANSITIONS & ANIMATIONS --- */
+        @keyframes slideUpFade {
+            0% { 
+                opacity: 0; 
+                transform: translateY(40px) scale(0.98); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .animate-item {
+            opacity: 0; /* Oculto por defecto */
+            animation-fill-mode: forwards;
+        }
+
+        .tab-pane.active .animate-item {
+            animation-name: slideUpFade;
+            animation-duration: 0.7s;
+            animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            border-color: rgba(98, 126, 234, 0.4);
+        }
+
+        /* Grids */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+
+        /* Status Banner */
+        .status-banner {
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .status-banner i { color: var(--accent); font-size: 1.5rem; }
+
+        /* Typography & Utilities */
+        h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 24px; }
+        h2 { font-size: 2rem; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--glass-border); }
+        h2 i { margin-right: 12px; color: var(--primary); }
+        .subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin-bottom: 40px; }
         
-        /* Scrollbar estético */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }
+        .quote-block {
+            border-left: 4px solid var(--primary);
+            padding: 24px;
+            background: var(--glass-bg);
+            border-radius: 0 12px 12px 0;
+            font-style: italic;
+            font-size: 1.1rem;
+            margin: 40px 0;
+            color: #E5E7EB;
+        }
+
+        /* NFT Card */
+        .nft-card {
+            background: var(--glass-bg);
+            border: 1px solid rgba(98, 126, 234, 0.4);
+            border-radius: 24px;
+            padding: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            max-width: 350px;
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .nft-card:hover {
+            transform: scale(1.02) translateY(-10px);
+            box-shadow: 0 30px 60px rgba(98, 126, 234, 0.2);
+        }
+        .nft-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 16px; }
+        .nft-info { padding: 20px 8px 8px 8px; }
+        .id-badge { background: rgba(98, 126, 234, 0.2); color: var(--primary); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; }
+
+        /* Comparison Tables */
+        .comp-row { display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--glass-border); }
+        .comp-row:last-child { border-bottom: none; }
+        .tag-bad { background: rgba(239, 68, 68, 0.1); color: #F87171; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+        .tag-good { background: rgba(16, 185, 129, 0.1); color: #34D399; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; }
+
+        /* Timeline */
+        .timeline { border-left: 2px solid var(--primary); padding-left: 24px; margin-left: 12px; }
+        .timeline-item { position: relative; margin-bottom: 32px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -31px; top: 0; width: 14px; height: 14px;
+            background: var(--bg-color); border: 2px solid var(--primary); border-radius: 50%;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 8px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .tab-pane { padding: 40px; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: sticky;
+                padding: 16px;
+                flex-direction: column;
+                z-index: 1000;
+            }
+            .nav-logo { margin-bottom: 16px; padding: 0; }
+            .nav-links {
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 0;
+                gap: 8px;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .nav-links::-webkit-scrollbar { display: none; }
+            .nav-links button { padding: 12px; white-space: nowrap; border-radius: 8px; }
+            .nav-links button.active { border-left: none; border-bottom: 3px solid var(--primary); border-radius: 8px; }
+            .main-content { margin-left: 0; }
+            .tab-pane { padding: 24px; }
+        }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-blue-100 bg-animated flex flex-col font-sans text-slate-800 overflow-hidden relative">
+<body>
 
-    <!-- Background Decorative Blobs -->
-    <div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-purple-300/30 mix-blend-multiply filter blur-3xl animate-float pointer-events-none z-0"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[50vw] h-[50vw] rounded-full bg-indigo-300/30 mix-blend-multiply filter blur-3xl animate-float pointer-events-none z-0" style="animation-delay: 2s;"></div>
-
-    <!-- Top Navbar -->
-    <header class="bg-indigo-900/90 backdrop-blur-md text-white p-4 shadow-lg flex justify-between items-center shrink-0 z-50 border-b border-indigo-800">
-        <div class="flex items-center gap-3 cursor-pointer group" onclick="goToSlide(-1)">
-            <div class="bg-white/10 p-2 rounded-lg group-hover:bg-white/20 transition-colors">
-                <i data-lucide="paw-print" class="w-7 h-7 text-indigo-300 group-hover:text-white transition-colors"></i>
-            </div>
-            <h1 class="text-xl font-bold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-200 hidden sm:block">PAW CHAIN</h1>
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+        <div class="nav-logo">
+            <i class="fa-solid fa-paw" style="color: var(--primary);"></i> PAW Chain
         </div>
-        <div class="flex items-center gap-2 sm:gap-4">
-            <button onclick="toggleAiModal(true)" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-gradient-to-r from-fuchsia-500 to-purple-600 text-white hover:shadow-fuchsia-500/50 border border-fuchsia-400/50">
-                <i data-lucide="sparkles" class="w-4 h-4"></i>
-                Coach IA <span class="hidden sm:inline">✨</span>
+        <nav class="nav-links">
+            <button class="tab-btn active" data-target="overview">
+                <i class="fa-solid fa-house"></i> Overview
             </button>
-            <button id="toggleNotesBtn" onclick="toggleNotes()" class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-white/10 text-indigo-100 hover:bg-white/20 border border-white/10">
-                <i data-lucide="lightbulb" id="notesIcon" class="w-4 h-4"></i>
-                <span id="notesBtnText">Modo Presentador</span>
+            <button class="tab-btn" data-target="problem">
+                <i class="fa-solid fa-triangle-exclamation"></i> Problem Statement
             </button>
+            <button class="tab-btn" data-target="theory">
+                <i class="fa-solid fa-network-wired"></i> DAO Theory
+            </button>
+            <button class="tab-btn" data-target="protocol">
+                <i class="fa-solid fa-layer-group"></i> Protocol Design
+            </button>
+            <button class="tab-btn" data-target="governance">
+                <i class="fa-solid fa-landmark"></i> Governance
+            </button>
+            <button class="tab-btn" data-target="roadmap">
+                <i class="fa-solid fa-map"></i> Roadmap
+            </button>
+            <button class="tab-btn" data-target="funding">
+                <i class="fa-solid fa-seedling"></i> Funding
+            </button>
+        </nav>
+        <div style="margin-top: auto; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            <p>Ethereum Foundation ESP Proposal</p>
+            <p style="margin-top: 4px;">v1.0 · March 2026</p>
         </div>
-    </header>
+    </aside>
 
     <!-- Main Content Area -->
-    <div class="flex flex-1 overflow-hidden z-10">
-        
-        <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-white/40 backdrop-blur-xl border-r border-white/50 hidden md:flex flex-col overflow-y-auto shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-            <div class="p-5 text-xs font-black text-indigo-400 uppercase tracking-widest border-b border-white/50">Diapositivas</div>
-            <div id="sidebarMenu" class="flex flex-col">
-                <!-- Injected via JS -->
-            </div>
-        </aside>
+    <main class="main-content">
 
-        <!-- Slide Display Area -->
-        <main class="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col items-center relative">
+        <!-- 0. Overview Tab -->
+        <div id="overview" class="tab-pane active">
+            <div class="animate-item" style="animation-delay: 0s; display:inline-block; padding: 6px 12px; background: rgba(98, 126, 234, 0.1); border: 1px solid var(--primary); border-radius: 20px; font-size: 0.85rem; margin-bottom: 24px; color: var(--primary); font-weight: 600;">
+                DAO Protocol Proposal · Public Open Infrastructure
+            </div>
+            <h1 class="animate-item" style="animation-delay: 0.1s;">PAW Chain <br><span class="gradient-text">Open Pet Identity</span></h1>
+            <p class="subtitle animate-item" style="animation-delay: 0.2s;">An open, permissionless identity protocol for pets on Ethereum, governed by the community. Submitted to the Ethereum Foundation (ESP).</p>
             
-            <!-- Glassmorphism Main Card -->
-            <div class="w-full max-w-5xl bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(31,38,135,0.07)] rounded-3xl overflow-hidden min-h-[65vh] flex flex-col border border-white relative z-10 transition-all duration-500">
-                
-                <!-- Dynamic Progress Bar -->
-                <div class="absolute top-0 left-0 h-1.5 bg-indigo-100 w-full z-20">
-                    <div id="progressBar" class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 transition-all duration-700 ease-out" style="width: 0%;"></div>
+            <div class="grid-2">
+                <div class="animate-item" style="animation-delay: 0.3s;">
+                    <div class="status-banner">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div>
+                            <h4 style="margin-bottom: 4px;">On-chain status · March 14, 2026</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted);">Contract deployed on Base Mainnet. TOKEN #001 minted (Bella, Shih Tzu). PIP-000 active.</p>
+                        </div>
+                    </div>
+                    <div class="quote-block">
+                        “The problem of pet identity in Mexico is not a data problem. It is a coordination problem between actors who do not know each other, do not trust each other, and do not want to depend on a central authority. That is exactly the problem Ethereum was built to solve.”
+                    </div>
                 </div>
                 
-                <!-- Dynamic Content Wrapper -->
-                <div id="slideContentWrapper" class="flex-1 flex flex-col h-full w-full">
-                    <!-- Slide content will be injected here -->
+                <div class="animate-item" style="animation-delay: 0.4s; display: flex; justify-content: center; align-items: flex-start;">
+                    <div class="nft-card">
+                        <img src="https://images.unsplash.com/photo-1596854407944-bf87f6fdd49e?auto=format&fit=crop&w=800&q=80" alt="Bella the Shih Tzu - PAW Chain Token #001">
+                        <div class="nft-info">
+                            <span class="id-badge">TOKEN #001</span>
+                            <h3 style="display: flex; justify-content: space-between; font-size: 1.5rem; margin-bottom: 8px;">Bella <i class="fa-solid fa-circle-check" style="color: var(--primary);"></i></h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;"><i class="fa-solid fa-dog"></i> Shih Tzu, Female</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Navigation Controls Floating Bar (Matching User Screenshot) -->
-            <div class="w-full max-w-3xl flex justify-between items-center mt-8 z-20 bg-white/50 backdrop-blur-xl p-3 rounded-full border border-white/60 shadow-[0_8px_32px_rgba(0,0,0,0.05)]">
-                <button id="prevBtn" onclick="prevSlide()" disabled class="flex items-center gap-2 px-6 py-3 bg-white border border-slate-200 rounded-full shadow-sm hover:bg-slate-50 hover:border-indigo-300 hover:text-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed text-slate-600 font-bold transition-all duration-300 transform active:scale-95">
-                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                    Atrás
-                </button>
-                
-                <!-- Dots indicator -->
-                <div id="paginationDots" class="flex gap-1.5 px-4 hidden sm:flex items-center">
-                    <!-- Injected via JS -->
+            <div class="grid-4" style="margin-top: 40px;">
+                <div class="glass-card animate-item" style="animation-delay: 0.5s; padding: 24px;">
+                    <i class="fa-solid fa-users fa-2x" style="color: var(--primary); margin-bottom: 16px;"></i>
+                    <h4>Founding Team</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">EGADE Business School · Tec de Monterrey System</p>
                 </div>
-                
-                <button id="nextBtn" onclick="nextSlide()" class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-full shadow-lg hover:shadow-indigo-500/30 disabled:opacity-40 disabled:cursor-not-allowed font-bold transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95">
-                    Siguiente
-                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                </button>
+                <div class="glass-card animate-item" style="animation-delay: 0.6s; padding: 24px;">
+                    <i class="fa-brands fa-ethereum fa-2x" style="color: var(--secondary); margin-bottom: 16px;"></i>
+                    <h4>Network</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">Base Mainnet (L2) · Contract deployed</p>
+                </div>
+                <div class="glass-card animate-item" style="animation-delay: 0.7s; padding: 24px;">
+                    <i class="fa-solid fa-check-to-slot fa-2x" style="color: var(--accent); margin-bottom: 16px;"></i>
+                    <h4>Voting</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 8px;">PIP-000 active · Open to all wallets</p>
+                </div>
             </div>
 
-        </main>
-    </div>
-
-    <!-- AI Coach Modal -->
-    <div id="aiModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-indigo-900/40 backdrop-blur-sm p-4 opacity-0 transition-opacity duration-300">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col transform scale-95 transition-transform duration-300" id="aiModalContent">
-            <div class="bg-gradient-to-r from-fuchsia-600 to-purple-700 p-6 flex justify-between items-center text-white">
-                <div class="flex items-center gap-3">
-                    <div class="bg-white/20 p-2 rounded-xl backdrop-blur-md">
-                        <i data-lucide="bot" class="w-6 h-6"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-xl flex items-center gap-2">Coach IA para la DAO ✨</h3>
-                        <p class="text-fuchsia-100 text-sm">Simula preguntas difíciles y prepara tu defensa.</p>
-                    </div>
+            <!-- Ventana de Paragraph.xyz -->
+            <div class="glass-card animate-item" style="animation-delay: 0.8s; margin-top: 40px; padding: 0; overflow: hidden; border-color: rgba(98, 126, 234, 0.3);">
+                <div style="padding: 16px 24px; border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2);">
+                    <h4 style="margin: 0;"><i class="fa-solid fa-newspaper" style="color: var(--primary); margin-right: 8px;"></i> Publicación en Paragraph.xyz</h4>
+                    <a href="https://paragraph.com/@0x27e9e78897d65d51d05d687fe1269d88c3fa9329/%f0%9f%90%be-paw-chain-%e2%80%94-la-identidad-digital-de-tu-mascota-para-siempre-en-blockchain" target="_blank" style="font-size: 0.85rem; color: var(--text-main); background: var(--glass-bg); padding: 6px 14px; border-radius: 12px; border: 1px solid var(--glass-border); transition: background 0.3s;">Abrir enlace <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 4px;"></i></a>
                 </div>
-                <button onclick="toggleAiModal(false)" class="bg-white/10 hover:bg-white/20 p-2 rounded-full transition-colors">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
+                <iframe src="https://paragraph.com/@0x27e9e78897d65d51d05d687fe1269d88c3fa9329/%f0%9f%90%be-paw-chain-%e2%80%94-la-identidad-digital-de-tu-mascota-para-siempre-en-blockchain" width="100%" height="500px" style="border: none; background: #FFFFFF; display: block; border-radius: 0 0 16px 16px;"></iframe>
             </div>
-            
-            <div class="p-6 md:p-8 flex-1 overflow-y-auto bg-slate-50/50">
-                <label class="block text-sm font-bold text-slate-700 mb-2">
-                    ¿Qué objeción o pregunta te haría la DAO?
-                </label>
-                <div class="flex gap-3">
-                    <input type="text" id="aiQueryInput" placeholder="Ej: ¿Por qué usar blockchain si una base de datos normal sirve?" class="flex-1 px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-fuchsia-500 focus:border-fuchsia-500 outline-none transition-shadow">
-                    <button id="aiAskBtn" onclick="handleAskAI()" class="bg-purple-600 hover:bg-purple-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white px-6 py-3 rounded-xl font-bold transition-colors flex items-center gap-2 shadow-md">
-                        <span id="aiBtnText">Preguntar</span>
-                        <i data-lucide="loader-2" id="aiLoadingIcon" class="w-5 h-5 animate-spin hidden"></i>
-                    </button>
-                </div>
+        </div>
 
-                <div id="aiResponseContainer" class="mt-6 bg-white p-6 rounded-2xl border border-fuchsia-100 shadow-[0_4px_20px_-10px_rgba(192,38,211,0.2)] relative animate-fade-up hidden">
-                    <div class="absolute -top-3 left-6 bg-fuchsia-100 text-fuchsia-800 text-xs font-bold px-3 py-1 rounded-full border border-fuchsia-200">
-                        Respuesta Sugerida
+        <!-- 1. Problem Statement Tab -->
+        <div id="problem" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problem Statement</h2>
+            <div class="grid-2">
+                <div class="animate-item" style="animation-delay: 0.1s;">
+                    <h3 style="margin-bottom: 16px; color: var(--primary);">1.1 The Coordination Failure</h3>
+                    <p style="margin-bottom: 16px;">Mexico has over 80 million pets (69.8% of households). The pet services market is valued at $4.5 billion USD in 2025 and projected to reach $6.3 billion by 2032.</p>
+                    <p style="margin-bottom: 16px;">Yet the information infrastructure is deeply fragmented. Vaccination records are lost, veterinary histories are siloed, and adoptions lack a verifiable trail. Trust is rebuilt from scratch every time a pet crosses a border or changes vets.</p>
+                    
+                    <div class="glass-card" style="margin-top: 32px;">
+                        <h3 style="margin-bottom: 16px; color: var(--secondary);">1.2 Why Existing Solutions Fail</h3>
+                        <p style="font-size: 0.95rem; color: var(--text-muted);">Centralized databases (municipal registries, corporate systems) fail because they have a single controller whose incentives do not align with all actors. They can change access rules, charge fees, or get hacked. A DAO-governed protocol on Ethereum eliminates this root problem via public, auditable code.</p>
                     </div>
-                    <div id="aiResponseText" class="text-slate-700 leading-relaxed whitespace-pre-line mt-2 text-sm md:text-base">
-                        <!-- AI Response will appear here -->
+                </div>
+                
+                <div class="glass-card comparison-card animate-item" style="animation-delay: 0.2s;">
+                    <h3 style="margin-bottom: 8px;">1.3 The Travel Clearance Problem</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">A concrete manifestation: SENASICA and airline requirements.</p>
+                    
+                    <div class="comp-row animate-item" style="animation-delay: 0.3s;">
+                        <div style="flex:1;"><strong>Health certificate</strong></div>
+                        <div style="flex:1;"><span class="tag-bad">Paper · Expires 15 days</span></div>
+                        <div style="flex:1; text-align:right;"><span class="tag-good">On-chain credential</span></div>
+                    </div>
+                    <div class="comp-row animate-item" style="animation-delay: 0.4s;">
+                        <div style="flex:1;"><strong>Rabies vaccine</strong></div>
+                        <div style="flex:1;"><span class="tag-bad">Physical card</span></div>
+                        <div style="flex:1; text-align:right;"><span class="tag-good">Linked to NFT</span></div>
+                    </div>
+                    <div class="comp-row animate-item" style="animation-delay: 0.5s;">
+                        <div style="flex:1;"><strong>Deworming</strong></div>
+                        <div style="flex:1;"><span class="tag-bad">Non-standard note</span></div>
+                        <div style="flex:1; text-align:right;"><span class="tag-good">Standard credential</span></div>
+                    </div>
+                    <div class="comp-row animate-item" style="animation-delay: 0.6s;">
+                        <div style="flex:1;"><strong>Ownership</strong></div>
+                        <div style="flex:1;"><span class="tag-bad">Verbal/Paper</span></div>
+                        <div style="flex:1; text-align:right;"><span class="tag-good">NFT transfer history</span></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script>
-        // Data Structure
-        const presentationData = {
-            cover: {
-                title: "PAW Chain",
-                subtitle: "Pilot for Decentralized Pet Identity within the EGADE Community",
-                course: "MT5057.60 - Blockchain and Non-Fungible Token Applications",
-                professor: "Saswat Kumar Sahu",
-                date: "Marzo 2026",
-                team: [
-                    "Tania Cordero Romero (A00922778)",
-                    "Emmanuel Herrera Pereda",
-                    "Joél Moreno Gregorio",
-                    "Jaime Rendón Morones",
-                    "Brenda Berenice Meza Suástegui (A01330107)"
-                ]
-            },
-            slides: [
-                {
-                    title: "1. Project Summary",
-                    icon: "file-text",
-                    formalText: `
-                        <div class="space-y-4">
-                            <p class="animate-fade-up delay-100"><strong>PAW Chain</strong> is a pilot project that proposes the design and testing of a decentralized pet identity system within the <strong>EGADE Business School community</strong>. The objective is to explore how blockchain technology and DAO governance principles can be applied to solve a real problem: the fragmentation and lack of verifiable pet identity records.</p>
-                            <p class="animate-fade-up delay-200">In this pilot, pets owned by members of the EGADE community could receive a digital identity represented on blockchain. This identity would contain essential pet information, proof of ownership, and selected veterinary records in a verifiable format.</p>
-                            <p class="animate-fade-up delay-300">Rather than launching a full commercial solution, the project is intentionally scoped as a <strong>controlled academic and community-based pilot</strong>. This allows the team to test technological feasibility, user adoption, governance participation, and practical value in a trusted environment before considering scale.</p>
-                            <ul class="list-disc pl-5 mt-4 space-y-2 animate-fade-up delay-400">
-                                <li class="hover:text-indigo-600 transition-colors"><strong>Blockchain application:</strong> use of NFT/DID concepts for pet identity.</li>
-                                <li class="hover:text-indigo-600 transition-colors"><strong>Practical utility:</strong> verifiable records and ownership tracking.</li>
-                                <li class="hover:text-indigo-600 transition-colors"><strong>DAO logic:</strong> community participation in defining standards, validation rules, and future evolution of the system.</li>
-                            </ul>
-                        </div>`,
-                    speakerNotes: `
-                        <div class="space-y-2">
-                            <p class="animate-fade-up delay-100"><strong>Qué significa esto en términos simples:</strong></p>
-                            <ul class="list-disc pl-5 space-y-1 animate-fade-up delay-200">
-                                <li><strong>No vendemos una "app para mascotas":</strong> Proponemos un piloto de identidad digital descentralizada. El valor está en demostrar que blockchain resuelve confianza y trazabilidad.</li>
-                                <li><strong>Limitado a EGADE:</strong> Hace el proyecto realista, evita sonar demasiado ambicioso y justifica un entorno controlado.</li>
-                                <li><strong>No prometemos lo imposible:</strong> Es un pilot project, no una plataforma global. Mejor prometer poco y bien definido, que mucho y sin viabilidad.</li>
-                            </ul>
-                        </div>`
-                },
-                {
-                    title: "2. Problem Statement",
-                    icon: "target",
-                    formalText: `
-                        <div class="space-y-4">
-                            <p class="animate-fade-up delay-100">Today, pet-related information is typically stored across disconnected systems and non-standardized formats. Vaccination records may be kept in paper form, veterinary history may remain locked inside individual clinics, and proof of ownership is often difficult to verify or transfer reliably.</p>
-                            <p class="animate-fade-up delay-200">This creates practical inefficiencies and trust problems. A pet owner may struggle to prove ownership, consolidate health history, or share verified records when traveling, relocating, using a pet service, or engaging in adoption or transfer processes.</p>
-                            <p class="animate-fade-up delay-300">Within a community such as EGADE, where members tend to be digitally literate, mobile, and open to innovation, this problem offers an opportunity to test whether a blockchain-based identity layer can improve trust, accessibility, and traceability of pet data.</p>
-                            <div class="bg-indigo-50/80 backdrop-blur-sm p-5 rounded-xl border border-indigo-200 mt-6 text-indigo-900 font-medium animate-fade-up delay-400 shadow-[0_4px_20px_-10px_rgba(79,70,229,0.3)] hover:scale-[1.02] transition-transform duration-300">
-                                <i data-lucide="sparkles" class="inline w-5 h-5 mr-2 text-indigo-500 mb-1"></i>
-                                The core problem is not merely the lack of information, but rather the absence of a shared, verifiable, and portable pet identity system.
-                            </div>
-                        </div>`,
-                    speakerNotes: `
-                        <div class="space-y-2">
-                            <p class="animate-fade-up delay-100"><strong>Cómo explicarlo al equipo (El problema real):</strong></p>
-                            <p class="animate-fade-up delay-200">El problema <strong>NO</strong> es: "no hay apps de mascotas" o "la gente no cuida a sus mascotas".</p>
-                            <p class="animate-fade-up delay-300">El problema <strong>SÍ</strong> es: La información existe, pero está dispersa, no estandarizada, difícil de compartir/verificar y poco portable.</p>
-                            <p class="animate-fade-up delay-400 mt-2"><strong>Ejemplos concretos a mencionar:</strong></p>
-                            <ul class="list-disc pl-5 space-y-1 animate-fade-up delay-500">
-                                <li>Si se pierde la cartilla física, se pierde el historial visible.</li>
-                                <li>Cambio de veterinario = pérdida de acceso confiable al historial.</li>
-                                <li>En adopciones o cambios de dueño, no hay forma simple y verificable de rastrear el cambio.</li>
-                            </ul>
-                        </div>`
-                },
-                {
-                    title: "3. Why EGADE",
-                    icon: "users",
-                    formalText: `
-                        <div class="space-y-4">
-                            <p class="animate-fade-up delay-100">EGADE is an appropriate initial environment for this pilot because it offers a <strong>small but credible test community</strong> with characteristics that support innovation adoption:</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                                <div class="animate-fade-up delay-200 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
-                                    <span class="font-medium text-slate-700">relatively high digital literacy</span>
-                                </div>
-                                <div class="animate-fade-up delay-300 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
-                                    <span class="font-medium text-slate-700">openness to emerging technologies</span>
-                                </div>
-                                <div class="animate-fade-up delay-400 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
-                                    <span class="font-medium text-slate-700">capacity to participate in governance experiments</span>
-                                </div>
-                                <div class="animate-fade-up delay-500 group flex items-center gap-3 bg-white/60 hover:bg-white p-4 rounded-xl shadow-sm border border-slate-200 hover:border-indigo-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-                                    <div class="bg-green-100 p-2 rounded-full group-hover:scale-110 transition-transform"><i data-lucide="check-circle-2" class="text-green-600 w-5 h-5"></i></div> 
-                                    <span class="font-medium text-slate-700">trust-based relationships within the community</span>
-                                </div>
-                            </div>
-                            <p class="mt-6 animate-fade-up delay-[600ms]">By starting with EGADE, PAW Chain can validate its assumptions in a manageable environment before considering broader adoption beyond academia.</p>
-                            <p class="animate-fade-up delay-[700ms]">This approach reduces implementation complexity while increasing the probability of meaningful feedback, iterative improvement, and documented learning outcomes.</p>
-                        </div>`,
-                    speakerNotes: `
-                        <div class="space-y-2">
-                            <p class="animate-fade-up delay-100"><strong>Por qué esto conviene estratégicamente:</strong></p>
-                            <p class="animate-fade-up delay-200">Este punto no es decorativo. Justifica por qué empezamos pequeño.</p>
-                            <p class="animate-fade-up delay-300"><strong>Argumento fuerte para el profesor/DAO:</strong> "No queremos construir primero para todo el mercado pet". Queremos probar en una comunidad con alta probabilidad de entender Web3, donde podemos entrevistar usuarios reales y conseguir feedback con menor fricción.</p>
-                            <p class="animate-fade-up delay-400 text-indigo-800 bg-indigo-100/50 p-2 rounded mt-2">Demuestra criterio de innovación: <em>primero validar en un nicho controlado, luego escalar.</em></p>
-                        </div>`
-                },
-                {
-                    title: "4. Project Scope",
-                    icon: "target",
-                    formalText: `
-                        <div class="space-y-4">
-                            <p class="animate-fade-up delay-100">The PAW Chain pilot will be limited to the following scope to ensure technical feasibility and educational value:</p>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                                <div class="bg-gradient-to-br from-green-50 to-emerald-100/50 p-6 rounded-2xl border border-green-200 shadow-sm animate-fade-up delay-200 hover:shadow-md transition-shadow">
-                                    <h4 class="font-bold text-green-800 flex items-center gap-2 mb-4 text-lg border-b border-green-200 pb-2">
-                                        <i data-lucide="check-circle-2" class="w-6 h-6"></i> Included in scope
-                                    </h4>
-                                    <ul class="space-y-3 text-sm text-green-900">
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> registration of participating pet owners from the EGADE community</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> creation of a blockchain-linked digital identity for pets</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> generation of a QR code linked to the pet identity</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> storage of selected pet metadata</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> basic proof of ownership linked to a wallet</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> limited veterinary record registration</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> demonstration of ownership transfer</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> governance simulation through community voting tools</li>
-                                    </ul>
-                                </div>
-                                <div class="bg-gradient-to-br from-red-50 to-rose-100/50 p-6 rounded-2xl border border-red-200 shadow-sm animate-fade-up delay-300 hover:shadow-md transition-shadow">
-                                    <h4 class="font-bold text-red-800 flex items-center gap-2 mb-4 text-lg border-b border-red-200 pb-2">
-                                        <i data-lucide="x-circle" class="w-6 h-6"></i> Excluded from scope
-                                    </h4>
-                                    <ul class="space-y-3 text-sm text-red-900">
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> full integration with professional veterinary software</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> formal legal recognition of pet identity records</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> commercial launch to the broader public</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> advanced tokenomics</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> real insurance integration</li>
-                                        <li class="flex gap-2 items-start"><span class="font-bold mt-0.5">•</span> real-time geolocation or lost-pet tracking</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>`,
-                    speakerNotes: `
-                        <div class="space-y-2">
-                            <p class="animate-fade-up delay-100"><strong>Qué SÍ podemos hacer (Lo importante):</strong></p>
-                            <ul class="list-disc pl-5 space-y-1 text-sm animate-fade-up delay-200">
-                                <li>Identidad digital por mascota (NFT/DID simplificado).</li>
-                                <li>Asociar a dueño mediante wallet (ej. wallet A = dueño, NFT 001 = mascota).</li>
-                                <li>Generar un QR que apunte a metadata básica (verificable en vivo).</li>
-                                <li>Cargar registros veterinarios simples (simulación, no integración profunda).</li>
-                                <li>Simular transferencia.</li>
-                                <li>Simular gobernanza con Snapshot.</li>
-                            </ul>
-                            <p class="mt-4 text-red-700 font-medium bg-red-50 p-2 rounded border border-red-200 animate-fade-up delay-300"><strong>No prometer:</strong> Integraciones reales con clínicas, validez legal formal o seguros pet. Es un MVP académico.</p>
-                        </div>`
-                },
-                {
-                    title: "5 & 6. Core Solution Design",
-                    icon: "shield-check",
-                    formalText: `
-                        <div class="space-y-6">
-                            <p class="animate-fade-up delay-100">PAW Chain’s solution is based on the concept of a portable, verifiable pet identity. The system functions through four core components:</p>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-4">
-                                <div class="animate-fade-up delay-200 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-indigo-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                                    <h4 class="font-bold text-indigo-900 text-lg">A. Digital Identity Token</h4>
-                                    <p class="text-sm mt-2 text-slate-600">Each pet receives a unique blockchain-linked identity, represented as an NFT or equivalent identity asset.</p>
-                                </div>
-                                <div class="animate-fade-up delay-300 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-purple-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                                    <h4 class="font-bold text-purple-900 text-lg">B. Metadata Layer</h4>
-                                    <p class="text-sm mt-2 text-slate-600">The identity token references essential structured data, such as pet profile, ownership information, and selected records.</p>
-                                </div>
-                                <div class="animate-fade-up delay-400 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-blue-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                                    <h4 class="font-bold text-blue-900 text-lg">C. Verification Layer</h4>
-                                    <p class="text-sm mt-2 text-slate-600">A QR code enables simple viewing and verification of identity information in real-world interactions.</p>
-                                </div>
-                                <div class="animate-fade-up delay-500 bg-white/80 backdrop-blur p-5 rounded-xl shadow-sm border-l-4 border-teal-500 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-                                    <h4 class="font-bold text-teal-900 text-lg">D. Governance Layer</h4>
-                                    <p class="text-sm mt-2 text-slate-600">The community participates in defining standards and validation rules through DAO-style decision-making processes.</p>
-                                </div>
-                            </div>
-                            <div class="animate-fade-up delay-[600ms] mt-8 bg-slate-50/50 p-6 rounded-2xl border border-slate-200">
-                                <h3 class="font-bold text-lg mb-4 text-slate-800">What We Can Actually Build (Deliverables):</h3>
-                                <ul class="flex flex-wrap gap-2">
-                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Pet identity registration flow</li>
-                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Blockchain-linked identity asset</li>
-                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">QR-based verification page</li>
-                                    <li class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-full text-sm font-medium shadow-sm">Basic owner wallet verification</li>
-                                </ul>
-                            </div>
-                        </div>`,
-                    speakerNotes: `
-                        <div class="space-y-2">
-                            <p class="animate-fade-up delay-100"><strong>Explicación Operativa (Para la Demo):</strong></p>
-                            <ul class="list-disc pl-5 space-y-2 text-sm animate-fade-up delay-200">
-                                <li><span class="bg-indigo-100 text-indigo-800 px-1 rounded">El Token:</span> Es el contenedor. Puede ser un NFT simple en Testnet o Base Sepolia.</li>
-                                <li><span class="bg-purple-100 text-purple-800 px-1 rounded">Metadata:</span> JSON o IPFS con datos básicos (Raza, color, año de nac.).</li>
-                                <li><span class="bg-blue-100 text-blue-800 px-1 rounded font-bold">Verification (EL QR ES CLAVE):</span> Aquí es donde el proyecto cobra vida. Si muestras que escaneando un QR se ve el perfil verificado del perrito en vivo, ganas la presentación.</li>
-                                <li><span class="bg-teal-100 text-teal-800 px-1 rounded">Registros Vet:</span> Es una simulación. Capturaremos: tipo de vacuna, fecha, etc.</li>
-                            </ul>
-                        </div>`
-                }
-                // Adding only a few slides for brevity, but enough to show pagination correctly
-            ]
-        };
-
-        // Application State
-        let currentSlideIndex = -1; // -1 is Cover Slide
-        let showNotes = false;
-        let isAiLoading = false;
-
-        // DOM Elements
-        const slideContentWrapper = document.getElementById('slideContentWrapper');
-        const sidebarMenu = document.getElementById('sidebarMenu');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const paginationDots = document.getElementById('paginationDots');
-        const progressBar = document.getElementById('progressBar');
-        const toggleNotesBtn = document.getElementById('toggleNotesBtn');
-        const notesIcon = document.getElementById('notesIcon');
-        const notesBtnText = document.getElementById('notesBtnText');
-        const aiModal = document.getElementById('aiModal');
-        const aiModalContent = document.getElementById('aiModalContent');
-        const aiQueryInput = document.getElementById('aiQueryInput');
-        const aiResponseContainer = document.getElementById('aiResponseContainer');
-        const aiResponseText = document.getElementById('aiResponseText');
-        const aiAskBtn = document.getElementById('aiAskBtn');
-        const aiBtnText = document.getElementById('aiBtnText');
-        const aiLoadingIcon = document.getElementById('aiLoadingIcon');
-
-        // Initialization
-        function init() {
-            renderSidebar();
-            renderSlide();
+        <!-- 2. DAO Theory Tab -->
+        <div id="theory" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-network-wired"></i> 2. DAO Theory Applied</h2>
+            <p class="animate-item" style="animation-delay: 0.1s; max-width: 800px; margin-bottom: 40px; font-size: 1.1rem;">A Decentralized Autonomous Organization is not just a voting tool; it is a coordination mechanism for actors who share an interest but lack common trust infrastructure. PAW Chain fits this structurally perfectly.</p>
             
-            // Add input event listener for Enter key on AI input
-            aiQueryInput.addEventListener('keydown', (e) => {
-                if(e.key === 'Enter') handleAskAI();
-            });
-        }
+            <div class="grid-3">
+                <div class="glass-card animate-item" style="animation-delay: 0.2s;">
+                    <i class="fa-solid fa-users-slash fa-2x" style="color: var(--primary); margin-bottom: 16px;"></i>
+                    <h3 style="margin-bottom: 12px;">No prior relationship</h3>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">A pet owner in CDMX and a vet in Monterrey have no shared history. Without a shared protocol, trust is impossible.</p>
+                </div>
+                <div class="glass-card animate-item" style="animation-delay: 0.3s;">
+                    <i class="fa-solid fa-shield-halved fa-2x" style="color: var(--secondary); margin-bottom: 16px;"></i>
+                    <h3 style="margin-bottom: 12px;">Valid distrust exists</h3>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">Paper can be forged. Private databases altered. On-chain credentials signed with a private key cannot be tampered with.</p>
+                </div>
+                <div class="glass-card animate-item" style="animation-delay: 0.4s;">
+                    <i class="fa-solid fa-building-circle-xmark fa-2x" style="color: var(--accent); margin-bottom: 16px;"></i>
+                    <h3 style="margin-bottom: 12px;">No central authority</h3>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">PETCO, airlines, SENASICA, and vets have different incentives. A DAO ensures no single entity dictates terms to the others.</p>
+                </div>
+            </div>
+        </div>
 
-        // Render functions
-        function renderSidebar() {
-            let html = `
-                <button onclick="goToSlide(-1)" class="text-left px-5 py-4 border-l-4 transition-all duration-300 ${currentSlideIndex === -1 ? 'border-indigo-600 bg-white/60 text-indigo-900 font-bold shadow-sm' : 'border-transparent text-slate-500 hover:bg-white/40 hover:text-indigo-600'}">
-                    0. Portada
-                </button>
-            `;
-            
-            presentationData.slides.forEach((slide, idx) => {
-                const isActive = currentSlideIndex === idx;
-                const shortTitle = slide.title.split('.')[1] || slide.title;
-                html += `
-                    <button onclick="goToSlide(${idx})" class="text-left px-5 py-4 border-l-4 flex items-center gap-3 transition-all duration-300 ${isActive ? 'border-indigo-600 bg-white/60 text-indigo-900 font-bold shadow-sm' : 'border-transparent text-slate-500 hover:bg-white/40 hover:text-indigo-600'}">
-                        <i data-lucide="${slide.icon}" class="w-4 h-4 transition-colors duration-300 ${isActive ? 'text-indigo-600' : 'text-slate-400'}"></i>
-                        <span class="truncate text-sm">${shortTitle}</span>
-                    </button>
-                `;
-            });
-            sidebarMenu.innerHTML = html;
-        }
-
-        function renderSlide() {
-            // Update Progress
-            const progress = currentSlideIndex === -1 ? 0 : ((currentSlideIndex + 1) / presentationData.slides.length) * 100;
-            progressBar.style.width = `${progress}%`;
-
-            if (currentSlideIndex === -1) {
-                // Render Cover
-                slideContentWrapper.innerHTML = `
-                    <div class="flex-1 flex flex-col items-center justify-center p-12 text-center h-full relative overflow-hidden rounded-3xl">
-                        <!-- Subtle inner grid bg -->
-                        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoOTksIDEwMiwgMjQxLCAwLjE1KSIvPjwvc3ZnPg==')] opacity-50 z-0 pointer-events-none"></div>
-
-                        <div class="bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-[2rem] mb-8 text-white shadow-2xl animate-pulse-glow z-10 transform hover:scale-105 transition-transform duration-500">
-                            <i data-lucide="paw-print" class="w-24 h-24"></i>
-                        </div>
-                        
-                        <h2 class="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-900 to-purple-900 mb-6 animate-fade-up delay-100 drop-shadow-sm z-10 tracking-tight">
-                            ${presentationData.cover.title}
-                        </h2>
-                        
-                        <h3 class="text-xl md:text-2xl text-slate-600 font-medium mb-10 max-w-2xl animate-fade-up delay-200 z-10 leading-relaxed">
-                            ${presentationData.cover.subtitle}
-                        </h3>
-                        
-                        <div class="w-24 h-1.5 bg-gradient-to-r from-indigo-300 to-purple-300 rounded-full mb-10 animate-fade-up delay-300 z-10"></div>
-                        
-                        <div class="flex flex-col md:flex-row gap-8 items-center justify-center animate-fade-up delay-400 z-10 w-full max-w-4xl">
-                            <div class="bg-white/80 backdrop-blur-md px-8 py-6 rounded-2xl shadow-lg border border-white/50 w-full md:w-1/2 hover:-translate-y-2 transition-transform duration-500">
-                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mb-1">Course</p>
-                                <p class="font-semibold text-slate-800">${presentationData.cover.course}</p>
-                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mt-4 mb-1">Professor</p>
-                                <p class="font-semibold text-slate-800">${presentationData.cover.professor}</p>
-                                <p class="text-xs uppercase tracking-widest font-bold text-indigo-400 mt-4 mb-1">Date</p>
-                                <p class="font-semibold text-slate-800">${presentationData.cover.date}</p>
-                            </div>
-
-                            <div class="bg-white/80 backdrop-blur-md px-8 py-6 rounded-2xl shadow-lg border border-white/50 w-full md:w-1/2 hover:-translate-y-2 transition-transform duration-500">
-                                <p class="font-black text-indigo-900 mb-4 border-b border-indigo-100 pb-3 flex items-center justify-center gap-2">
-                                    <i data-lucide="users" class="w-5 h-5 text-indigo-500"></i> Team 3
-                                </p>
-                                <ul class="text-sm font-medium text-slate-600 space-y-2 text-left">
-                                    ${presentationData.cover.team.map(member => `
-                                        <li class="flex items-center gap-2">
-                                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>${member}
-                                        </li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
+        <!-- 3. Protocol Design Tab -->
+        <div id="protocol" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-layer-group"></i> 3. Protocol Design</h2>
+            <div class="grid-2">
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div class="glass-card animate-item" style="animation-delay: 0.1s; border-left: 4px solid var(--primary); padding: 24px;">
+                        <h4>Layer 1 · Digital Identity (ERC-721 Base)</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Unique NFT on Ethereum L2. IPFS via Pinata for permanent metadata. Cryptographically tied to the owner's wallet.</p>
                     </div>
-                `;
-            } else {
-                // Render Content Slide
-                const slide = presentationData.slides[currentSlideIndex];
-                slideContentWrapper.innerHTML = `
-                    <div class="flex-1 flex flex-col h-full overflow-hidden">
-                        <!-- Formal Content Area -->
-                        <div id="formalContentArea" class="p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] ${showNotes ? 'h-[60%] border-b border-indigo-100/50 bg-white/40' : 'h-full bg-white/20'}">
-                            <div class="flex items-center gap-4 border-b-2 border-indigo-100 pb-6 mb-8 animate-fade-up">
-                                <div class="bg-indigo-100 p-3 rounded-2xl text-indigo-600 shadow-inner">
-                                    <i data-lucide="${slide.icon}" class="w-8 h-8"></i>
-                                </div>
-                                <h2 class="text-3xl md:text-4xl font-black text-slate-800 tracking-tight">
-                                    ${slide.title}
-                                </h2>
-                            </div>
-                            <div class="text-lg leading-relaxed text-slate-700 font-medium">
-                                ${slide.formalText}
-                            </div>
-                        </div>
-
-                        <!-- Speaker Notes Drawer (Animated entrance) -->
-                        <div id="notesDrawer" class="transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden bg-gradient-to-b from-amber-50/90 to-orange-50/90 backdrop-blur-xl border-t border-amber-200/50 ${showNotes ? 'h-[40%] min-h-[250px] opacity-100' : 'h-0 opacity-0 hidden'}">
-                            <div class="h-full p-6 md:p-8 overflow-y-auto">
-                                <h3 class="flex items-center gap-3 font-black text-amber-900 mb-5 text-lg uppercase tracking-wider">
-                                    <div class="bg-amber-400 p-1.5 rounded-lg text-amber-950">
-                                        <i data-lucide="lightbulb" class="w-5 h-5"></i> 
-                                    </div>
-                                    Estrategia de Venta (No mostrar a la DAO)
-                                </h3>
-                                <div class="text-amber-900 bg-white/80 backdrop-blur p-6 rounded-2xl shadow-sm border border-amber-200/60 font-medium leading-relaxed">
-                                    ${slide.speakerNotes}
-                                </div>
-                            </div>
-                        </div>
+                    <div class="glass-card animate-item" style="animation-delay: 0.2s; border-left: 4px solid var(--secondary); padding: 24px;">
+                        <h4>Layer 2 · Verifiable Credentials</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">DAO-authorized vets issue signed credentials (vaccines, surgeries) forming an authentic, tamper-resistant history.</p>
                     </div>
-                `;
-            }
-
-            // Update Navigation logic
-            updateNavigation();
-            
-            // Render Icons
-            lucide.createIcons();
-        }
-
-        // --- SPECIFIC: The Bottom Navigation Bar logic ---
-        function updateNavigation() {
-            // Disable/Enable buttons
-            prevBtn.disabled = currentSlideIndex === -1;
-            nextBtn.disabled = currentSlideIndex === presentationData.slides.length - 1;
-
-            // Generate the exact dots logic from React
-            let dotsHtml = '';
-            
-            // First dot (Cover indicator)
-            dotsHtml += `<div class="w-2.5 h-2.5 rounded-full transition-all duration-500 ${currentSlideIndex === -1 ? 'bg-indigo-600 w-6' : 'bg-slate-300'}"></div>`;
-            
-            // Slide dots
-            presentationData.slides.forEach((_, i) => {
-                dotsHtml += `<div class="w-2.5 h-2.5 rounded-full transition-all duration-500 ${currentSlideIndex === i ? 'bg-indigo-600 w-6' : 'bg-slate-300'}"></div>`;
-            });
-            
-            paginationDots.innerHTML = dotsHtml;
-        }
-
-        // Actions
-        function goToSlide(index) {
-            currentSlideIndex = index;
-            renderSidebar();
-            renderSlide();
-        }
-
-        function nextSlide() {
-            if (currentSlideIndex < presentationData.slides.length - 1) {
-                goToSlide(currentSlideIndex + 1);
-            }
-        }
-
-        function prevSlide() {
-            if (currentSlideIndex > -1) {
-                goToSlide(currentSlideIndex - 1);
-            }
-        }
-
-        function toggleNotes() {
-            showNotes = !showNotes;
-            
-            // Toggle button styles manually
-            if (showNotes) {
-                toggleNotesBtn.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-gradient-to-r from-amber-400 to-orange-400 text-amber-950 shadow-amber-400/50";
-                notesIcon.classList.add('animate-pulse');
-                notesBtnText.textContent = "Ocultar Estrategia";
-            } else {
-                toggleNotesBtn.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-300 shadow-md transform hover:scale-105 bg-white/10 text-indigo-100 hover:bg-white/20 border border-white/10";
-                notesIcon.classList.remove('animate-pulse');
-                notesBtnText.textContent = "Modo Presentador";
-            }
-            
-            // Re-render slide to apply classes
-            if(currentSlideIndex >= 0) {
-                 const formalContentArea = document.getElementById('formalContentArea');
-                 const notesDrawer = document.getElementById('notesDrawer');
-                 
-                 if(showNotes){
-                     formalContentArea.className = "p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] h-[60%] border-b border-indigo-100/50 bg-white/40";
-                     notesDrawer.classList.remove('hidden', 'h-0', 'opacity-0');
-                     notesDrawer.classList.add('h-[40%]', 'min-h-[250px]', 'opacity-100');
-                 } else {
-                     formalContentArea.className = "p-8 md:p-12 flex-1 overflow-y-auto transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] h-full bg-white/20";
-                     notesDrawer.classList.add('h-0', 'opacity-0');
-                     notesDrawer.classList.remove('h-[40%]', 'min-h-[250px]', 'opacity-100');
-                     setTimeout(() => { if(!showNotes) notesDrawer.classList.add('hidden'); }, 700);
-                 }
-            }
-        }
-
-        function toggleAiModal(isOpen) {
-            if (isOpen) {
-                aiModal.classList.remove('hidden');
-                // Allow display to register before fading in
-                setTimeout(() => {
-                    aiModal.classList.remove('opacity-0');
-                    aiModalContent.classList.remove('scale-95');
-                }, 10);
-                aiQueryInput.focus();
-            } else {
-                aiModal.classList.add('opacity-0');
-                aiModalContent.classList.add('scale-95');
-                setTimeout(() => {
-                    aiModal.classList.add('hidden');
-                }, 300);
-            }
-        }
-
-        // Gemini API Logic
-        const fetchWithRetry = async (url, options, retries = 5, delay = 1000) => {
-            try {
-                const res = await fetch(url, options);
-                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-                return await res.json();
-            } catch (error) {
-                if (retries > 0) {
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    return fetchWithRetry(url, options, retries - 1, delay * 2);
-                }
-                throw error;
-            }
-        };
-
-        async function handleAskAI() {
-            const query = aiQueryInput.value.trim();
-            if (!query) return;
-
-            isAiLoading = true;
-            aiAskBtn.disabled = true;
-            aiLoadingIcon.classList.remove('hidden');
-            aiBtnText.textContent = "Pensando...";
-            aiResponseContainer.classList.add('hidden');
-            aiResponseText.innerHTML = "";
-
-            const apiKey = "";
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-            const projectContext = `
-                Proyecto: PAW Chain - Identidad Descentralizada para Mascotas (Piloto EGADE).
-                Problema: Registros fragmentados y difíciles de verificar.
-                Solución: Identidad digital blockchain (NFT/DID), QR, registros veterinarios básicos.
-                Estrategia: Vender como piloto académico controlado, no app comercial.
-            `;
-
-            const promptText = `
-                Eres un "Coach de Presentaciones DAO".
-                Contexto: ${projectContext}
-                Objeción: "${query}"
-                Instrucción: Sugiere una respuesta persuasiva (español) basándote en la estrategia. Máximo 2 párrafos.
-            `;
-
-            const payload = {
-                contents: [{ parts: [{ text: promptText }] }],
-                systemInstruction: { parts: [{ text: "Eres un coach directo y experto." }] }
-            };
-
-            try {
-                const data = await fetchWithRetry(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+                    <div class="glass-card animate-item" style="animation-delay: 0.3s; border-left: 4px solid var(--accent); padding: 24px;">
+                        <h4>Layer 3 · Travel Clearance</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Scan a QR code to view verified on-chain data. Impossible to forge. Eliminates 15-day paper expiration panic.</p>
+                    </div>
+                    <div class="glass-card animate-item" style="animation-delay: 0.4s; border-left: 4px solid #F59E0B; padding: 24px;">
+                        <h4>Layer 4 · DAO Governance</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 8px;">Rules voted via PAW Improvement Proposals (PIPs) using Snapshot off-chain wallet signatures.</p>
+                    </div>
+                </div>
                 
-                const text = data.candidates?.[0]?.content?.parts?.[0]?.text || "No pude procesar una respuesta.";
-                aiResponseText.textContent = text;
-                aiResponseContainer.classList.remove('hidden');
-            } catch (error) {
-                console.error(error);
-                aiResponseText.textContent = "Error de conexión con el Coach IA.";
-                aiResponseContainer.classList.remove('hidden');
-            } finally {
-                isAiLoading = false;
-                aiAskBtn.disabled = false;
-                aiLoadingIcon.classList.add('hidden');
-                aiBtnText.textContent = "Preguntar";
-            }
-        }
+                <div class="animate-item" style="animation-delay: 0.5s;">
+                    <h3 style="margin-bottom: 24px;">Scope Definition</h3>
+                    <div class="glass-card" style="margin-bottom: 24px;">
+                        <h4 style="color: var(--accent); margin-bottom: 16px;"><i class="fa-solid fa-check"></i> Included in Pilot</h4>
+                        <ul style="font-size: 0.95rem; padding-left: 20px; color: var(--text-muted); line-height: 1.8;">
+                            <li>NFT identity on Base Mainnet</li>
+                            <li>IPFS metadata & QR verification</li>
+                            <li>Travel Clearance demo (SENASICA fields)</li>
+                            <li>On-chain ownership transfer history</li>
+                            <li>DAO wallet-based voting (Snapshot)</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card">
+                        <h4 style="color: #F87171; margin-bottom: 16px;"><i class="fa-solid fa-xmark"></i> Out of Scope</h4>
+                        <ul style="font-size: 0.95rem; padding-left: 20px; color: var(--text-muted); line-height: 1.8;">
+                            <li>Integration with existing clinic software</li>
+                            <li>Insurance or financial instruments</li>
+                            <li>Speculative tokenomics</li>
+                            <li>Commercial launch to general public</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        // Start
-        init();
+        <!-- 4. Governance Tab -->
+        <div id="governance" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-landmark"></i> 4. Modelo de Gobernanza</h2>
+            <p class="animate-item" style="animation-delay: 0.1s; margin-bottom: 40px; font-size: 1.1rem; max-width: 800px;">Adopción del modelo más probado en Ethereum: votación off-chain con Snapshot seguida de ejecución on-chain a través de un multisig 3-de-5.</p>
+            
+            <h3 class="animate-item" style="animation-delay: 0.2s; margin-bottom: 24px;">Poder de Voto por Actor (Capa 1)</h3>
+            <div class="grid-3" style="margin-bottom: 40px;">
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.3s; text-align: center;">
+                    <i class="fa-solid fa-user fa-2x" style="color: var(--primary); margin-bottom: 16px;"></i>
+                    <h4>Pet Owner</h4>
+                    <h2 class="gradient-text" style="border: none; padding: 0; margin: 8px 0;">1 Voto</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Por identidad. World ID verificado + ≥ 1 NFT.</p>
+                </div>
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.4s; text-align: center;">
+                    <i class="fa-solid fa-user-doctor fa-2x" style="color: var(--secondary); margin-bottom: 16px;"></i>
+                    <h4>Veterinary Validator</h4>
+                    <h2 class="gradient-text" style="border: none; padding: 0; margin: 8px 0;">3 Votos</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Responsabilidad técnica. SBT emitido por trust web.</p>
+                </div>
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.5s; text-align: center;">
+                    <i class="fa-solid fa-building-columns fa-2x" style="color: var(--accent); margin-bottom: 16px;"></i>
+                    <h4>Institutional Observer</h4>
+                    <h2 class="gradient-text" style="border: none; padding: 0; margin: 8px 0;">0 Votos</h2>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Entidades gubernamentales. Solo voz, sin voto.</p>
+                </div>
+            </div>
+
+            <div class="glass-card animate-item" style="animation-delay: 0.6s;">
+                <h3 style="margin-bottom: 16px;">Institutional Verifiers (Consumo sin Gobierno)</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 24px; color: var(--text-muted);">Cualquier institución puede integrarse en la capa de consumo porque las credenciales son públicas por diseño:</p>
+                <div class="grid-3">
+                    <div>
+                        <strong style="color: var(--primary); display: block; margin-bottom: 8px;"><i class="fa-solid fa-plane"></i> Aerolíneas</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Escanean el QR para ver vacuna y certificado de salud con timestamp criptográfico en tiempo real.</p>
+                    </div>
+                    <div>
+                        <strong style="color: var(--secondary); display: block; margin-bottom: 8px;"><i class="fa-solid fa-building-flag"></i> SENASICA</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Verificador en fronteras y potencial emisor del Certificado Zoosanitario directamente on-chain.</p>
+                    </div>
+                    <div>
+                        <strong style="color: var(--accent); display: block; margin-bottom: 8px;"><i class="fa-solid fa-shield-cat"></i> Aseguradoras</strong>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Historial médico on-chain para reducir fraudes y calcular riesgos mediante API pública.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Roadmap Tab -->
+        <div id="roadmap" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-map"></i> 5. Implementation & Roadmap</h2>
+            
+            <div class="grid-2">
+                <div class="animate-item" style="animation-delay: 0.1s;">
+                    <h3 style="margin-bottom: 24px; color: var(--primary);">Market Opportunity</h3>
+                    <div class="glass-card">
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px;">
+                                <strong style="color: white; font-size: 1.1rem;">$4.5B USD</strong><br>
+                                <span style="font-size: 0.9rem; color: var(--text-muted);">Market Size in Mexico (2025)</span>
+                            </li>
+                            <li style="margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px;">
+                                <strong style="color: white; font-size: 1.1rem;">80 Million</strong><br>
+                                <span style="font-size: 0.9rem; color: var(--text-muted);">Target demographic pets in Mexico</span>
+                            </li>
+                            <li style="margin-bottom: 20px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px;">
+                                <strong style="color: white; font-size: 1.1rem;">< 28%</strong><br>
+                                <span style="font-size: 0.9rem; color: var(--text-muted);">Current digital penetration (unserved demand)</span>
+                            </li>
+                            <li>
+                                <strong style="color: white; font-size: 1.1rem;">200M+</strong><br>
+                                <span style="font-size: 0.9rem; color: var(--text-muted);">Latin American scale potential</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="animate-item" style="animation-delay: 0.2s;">
+                    <h3 style="margin-bottom: 24px; color: var(--secondary);">Post-Pilot Scale</h3>
+                    <div class="timeline" style="margin-top: 32px;">
+                        <div class="timeline-item animate-item" style="animation-delay: 0.3s;">
+                            <h4 style="color: white;">Phase 1 · Now</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">EGADE/Tec pilot · 20 pets · Active PIPs · Travel Clearance demo</p>
+                        </div>
+                        <div class="timeline-item animate-item" style="animation-delay: 0.4s;">
+                            <h4 style="color: white;">Phase 2 · 3-6 Months</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">National Tec network expansion · First CDMX and MTY Validators certified</p>
+                        </div>
+                        <div class="timeline-item animate-item" style="animation-delay: 0.5s;">
+                            <h4 style="color: white;">Phase 3 · 6-18 Months</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">Mexican airline integration · SENASICA API · 500+ users</p>
+                        </div>
+                        <div class="timeline-item animate-item" style="animation-delay: 0.6s;">
+                            <h4 style="color: white;">Phase 4 · 18-36 Months</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">LatAm scaling · 200M+ pets · Mature DAO · Community treasury active</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Funding Tab -->
+        <div id="funding" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-seedling"></i> 6. Funding Request (ESP)</h2>
+            
+            <p class="animate-item" style="animation-delay: 0.1s; font-size: 1.1rem; color: var(--text-main); margin-bottom: 40px; max-width: 800px;">
+                This proposal requests ecosystem support to move PAW Chain from a validated concept to a deployed production protocol over a 6-month horizon.
+            </p>
+
+            <div class="glass-card animate-item" style="animation-delay: 0.2s; margin-bottom: 40px;">
+                <h3 style="margin-bottom: 24px;">Use of Funds (6 Parallel Streams)</h3>
+                <div class="grid-2">
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                        <li><i class="fa-solid fa-code" style="color: var(--primary); width: 24px;"></i> <strong>Smart Contracts:</strong> Production ERC-721 + Credential registry</li>
+                        <li><i class="fa-solid fa-shield-halved" style="color: var(--primary); width: 24px;"></i> <strong>Security Audit:</strong> Third-party audits of identity & governance</li>
+                        <li><i class="fa-solid fa-users" style="color: var(--primary); width: 24px;"></i> <strong>DAO Infra:</strong> Snapshot space, membership distribution</li>
+                    </ul>
+                    <ul style="list-style: none; display: flex; flex-direction: column; gap: 16px;">
+                        <li><i class="fa-solid fa-rocket" style="color: var(--secondary); width: 24px;"></i> <strong>Pilot Deployment:</strong> 500+ owners, 20 validators onboarded</li>
+                        <li><i class="fa-solid fa-box-open" style="color: var(--secondary); width: 24px;"></i> <strong>Open-source SDK:</strong> Developer toolkit for third-party builders</li>
+                        <li><i class="fa-solid fa-book" style="color: var(--secondary); width: 24px;"></i> <strong>Documentation:</strong> Protocol whitepaper, open GitHub repos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card animate-item" style="animation-delay: 0.3s; text-align: center; background: linear-gradient(145deg, rgba(98, 126, 234, 0.1), rgba(139, 92, 246, 0.1)); border-color: var(--primary);">
+                <h3 class="gradient-text" style="font-size: 2.2rem; margin-bottom: 16px; border: none; padding: 0;">80 million pets. One open protocol.</h3>
+                <p style="margin-bottom: 32px; font-size: 1.1rem; color: var(--text-muted);">All development open source. All governance on-chain. Verifiable anywhere.</p>
+                <a href="#" class="btn"><i class="fa-solid fa-arrow-up-right-from-square" style="margin-right: 8px;"></i> Review PIP-000</a>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Tab Switching Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove active class from all buttons and panes
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabPanes.forEach(p => p.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    btn.classList.add('active');
+
+                    // Show target pane
+                    const targetId = btn.getAttribute('data-target');
+                    const targetPane = document.getElementById(targetId);
+                    
+                    targetPane.classList.add('active');
+                    
+                    // Scroll to top of page on mobile when switching tabs
+                    if(window.innerWidth <= 768) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
