@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
+            /* Modo Oscuro por defecto */
             --bg-color: #0B0E14;
             --surface-color: #151A25;
             --primary: #627EEA; /* Ethereum Blue */
@@ -19,7 +20,28 @@
             --text-muted: #9CA3AF;
             --glass-bg: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.05);
+            --sidebar-bg: rgba(21, 26, 37, 0.95);
+            --table-bg: rgba(0, 0, 0, 0.2);
+            --img-bg: rgba(255, 255, 255, 0.05);
+            --hover-bg: rgba(255, 255, 255, 0.02);
             --sidebar-width: 300px;
+        }
+
+        /* Modo Claro */
+        [data-theme="light"] {
+            --bg-color: #F9FAFB;
+            --surface-color: #FFFFFF;
+            --primary: #4F46E5; /* Ajuste ligero para mejor contraste */
+            --secondary: #7C3AED;
+            --accent: #059669;
+            --text-main: #111827;
+            --text-muted: #4B5563;
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --sidebar-bg: rgba(255, 255, 255, 0.98);
+            --table-bg: rgba(0, 0, 0, 0.03);
+            --img-bg: rgba(0, 0, 0, 0.03);
+            --hover-bg: rgba(0, 0, 0, 0.04);
         }
 
         * {
@@ -35,11 +57,12 @@
             line-height: 1.6;
             overflow-x: hidden;
             display: flex;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         h1, h2, h3, h4 {
             font-family: 'Space Grotesk', sans-serif;
-            color: #FFFFFF;
+            color: var(--text-main);
         }
 
         a {
@@ -60,7 +83,7 @@
             left: 0;
             width: var(--sidebar-width);
             height: 100vh;
-            background: rgba(21, 26, 37, 0.95);
+            background: var(--sidebar-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border-right: 1px solid var(--glass-border);
@@ -69,17 +92,18 @@
             flex-direction: column;
             padding: 32px 0;
             overflow-y: auto;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .sidebar::-webkit-scrollbar { width: 6px; }
         .sidebar::-webkit-scrollbar-track { background: transparent; }
-        .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .sidebar::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 
         .nav-logo {
             font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             font-size: 1.5rem;
-            color: white;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -174,13 +198,13 @@
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 32px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
             margin-bottom: 24px;
         }
 
         .glass-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
             border-color: rgba(98, 126, 234, 0.4);
         }
 
@@ -188,9 +212,10 @@
             overflow-x: auto;
             border-radius: 12px;
             border: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.2);
+            background: var(--table-bg);
             margin-top: 16px;
             margin-bottom: 24px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .glass-table {
@@ -216,7 +241,7 @@
         }
 
         .glass-table tr:hover td {
-            background: rgba(255,255,255,0.02);
+            background: var(--hover-bg);
         }
 
         /* Grids */
@@ -243,7 +268,8 @@
             font-style: italic;
             font-size: 1.1rem;
             margin: 32px 0;
-            color: #E5E7EB;
+            color: var(--text-main);
+            transition: background-color 0.3s ease;
         }
 
         /* Status Banner */
@@ -265,9 +291,9 @@
             border: 1px solid rgba(98, 126, 234, 0.4);
             border-radius: 24px;
             padding: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             max-width: 350px;
-            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+            transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease;
         }
         .nft-card:hover {
             transform: scale(1.02) translateY(-10px);
@@ -283,6 +309,7 @@
         .timeline-item::before {
             content: ''; position: absolute; left: -31px; top: 0; width: 14px; height: 14px;
             background: var(--bg-color); border: 2px solid var(--primary); border-radius: 50%;
+            transition: background-color 0.3s ease;
         }
 
         /* Buttons */
@@ -298,6 +325,29 @@
             transition: opacity 0.3s;
         }
         .btn:hover { opacity: 0.9; }
+
+        /* Theme Toggle Button */
+        #theme-toggle {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 0 auto 24px auto;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        #theme-toggle:hover {
+            background: var(--glass-bg);
+            border-color: var(--primary);
+        }
 
         /* Responsive Design */
         @media (max-width: 1024px) {
@@ -369,6 +419,10 @@
             </button>
         </nav>
         <div style="margin-top: auto; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
+            <!-- Theme Toggle Button -->
+            <button id="theme-toggle">
+                <i class="fa-solid fa-sun"></i> Light Mode
+            </button>
             <p>Ethereum Foundation ESP Proposal</p>
             <p style="margin-top: 4px;">v1.0 · March 2026</p>
         </div>
@@ -390,7 +444,7 @@
                     <div class="status-banner">
                         <i class="fa-solid fa-circle-check"></i>
                         <div>
-                            <h4 style="margin-bottom: 4px; color: white;">On-chain status · March 14, 2026</h4>
+                            <h4 style="margin-bottom: 4px; color: var(--text-main);">On-chain status · March 14, 2026</h4>
                             <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Contract deployed on Base L2. TOKEN #001 minted (Bella). PIP-000 active.</p>
                         </div>
                     </div>
@@ -540,9 +594,9 @@
                     <h3 style="color: var(--accent);">2.3 Monterrey Innovation District</h3>
                     <p>The District is itself an experiment in coordination between heterogeneous actors. It provides the perfect reference ecosystem.</p>
                     <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
-                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-microchip" style="color: var(--primary); margin-top: 4px;"></i> <div><strong>Technical talent:</strong> Tec de Monterrey produces more engineers than any other Mexican institution.</div></li>
-                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-handshake" style="color: var(--secondary); margin-top: 4px;"></i> <div><strong>Trust culture:</strong> Anchor companies (FEMSA, Alfa) lower adoption friction.</div></li>
-                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-cubes" style="color: var(--accent); margin-top: 4px;"></i> <div><strong>Web3 presence:</strong> Active blockchain community ready for DAO governance.</div></li>
+                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-microchip" style="color: var(--primary); margin-top: 4px;"></i> <div><strong style="color: var(--text-main);">Technical talent:</strong> Tec de Monterrey produces more engineers than any other Mexican institution.</div></li>
+                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-handshake" style="color: var(--secondary); margin-top: 4px;"></i> <div><strong style="color: var(--text-main);">Trust culture:</strong> Anchor companies (FEMSA, Alfa) lower adoption friction.</div></li>
+                        <li style="display: flex; gap: 12px;"><i class="fa-solid fa-cubes" style="color: var(--accent); margin-top: 4px;"></i> <div><strong style="color: var(--text-main);">Web3 presence:</strong> Active blockchain community ready for DAO governance.</div></li>
                     </ul>
                 </div>
             </div>
@@ -580,19 +634,19 @@
                         <table class="glass-table">
                             <tbody>
                                 <tr>
-                                    <td><i class="fa-solid fa-server" style="color: var(--primary);"></i> <strong>Backend:</strong></td>
+                                    <td><i class="fa-solid fa-server" style="color: var(--primary);"></i> <strong style="color: var(--text-main);">Backend:</strong></td>
                                     <td>Python/FastAPI. Core logic & Web3.py interaction.</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="fa-solid fa-database" style="color: var(--secondary);"></i> <strong>Database:</strong></td>
+                                    <td><i class="fa-solid fa-database" style="color: var(--secondary);"></i> <strong style="color: var(--text-main);">Database:</strong></td>
                                     <td>SQLite for pilot, scaling to PostgreSQL.</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="fa-brands fa-ethereum" style="color: var(--accent);"></i> <strong>Blockchain:</strong></td>
+                                    <td><i class="fa-brands fa-ethereum" style="color: var(--accent);"></i> <strong style="color: var(--text-main);">Blockchain:</strong></td>
                                     <td>Solidity/Base L2. OpenZeppelin security standards.</td>
                                 </tr>
                                 <tr>
-                                    <td><i class="fa-solid fa-laptop-code" style="color: #F59E0B;"></i> <strong>Frontend:</strong></td>
+                                    <td><i class="fa-solid fa-laptop-code" style="color: #F59E0B;"></i> <strong style="color: var(--text-main);">Frontend:</strong></td>
                                     <td>HTML/JS/CSS with MetaMask integration for signing.</td>
                                 </tr>
                             </tbody>
@@ -708,16 +762,16 @@
                 <h3 style="color: var(--accent);">4.3 Progressive Decentralization</h3>
                 <div class="timeline" style="margin-top: 24px;">
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">1. Pilot (&lt; 50 wallets):</strong> Founding team holds 2 multisig signatures. PIPs are recommendations.
+                        <strong style="color: var(--text-main);">1. Pilot (&lt; 50 wallets):</strong> Founding team holds 2 multisig signatures. PIPs are recommendations.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">2. Early (50-200 wallets):</strong> Founding team reduces to 1 signature. Quorum is binding.
+                        <strong style="color: var(--text-main);">2. Early (50-200 wallets):</strong> Founding team reduces to 1 signature. Quorum is binding.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">3. Mature DAO (&gt; 200 wallets):</strong> Team loses signature. Fully community governance.
+                        <strong style="color: var(--text-main);">3. Mature DAO (&gt; 200 wallets):</strong> Team loses signature. Fully community governance.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 0;">
-                        <strong style="color: white;">4. Autonomous (&gt; 500 wallets):</strong> Pure on-chain governance. Multisig dissolved.
+                        <strong style="color: var(--text-main);">4. Autonomous (&gt; 500 wallets):</strong> Pure on-chain governance. Multisig dissolved.
                     </div>
                 </div>
             </div>
@@ -754,8 +808,8 @@
                 <div class="animate-item" style="animation-delay: 0.2s;">
                     <h3 style="color: var(--primary);">5.1 & 5.2 Market Strategy</h3>
                     <div class="glass-card" style="padding: 24px; height: calc(100% - 44px);">
-                        <p style="font-size: 0.95rem;"><strong>Founding Community (Tec CDMX):</strong> Validates infrastructure within a high-trust environment. High digital literacy and academic capacity to measure results.</p>
-                        <p style="font-size: 0.95rem; margin-bottom: 0;"><strong>Primary Market (Mexico City):</strong> Largest urban pet market in the country with high mobility. Portable credentials generate immediate value for owners and vets.</p>
+                        <p style="font-size: 0.95rem;"><strong style="color: var(--text-main);">Founding Community (Tec CDMX):</strong> Validates infrastructure within a high-trust environment. High digital literacy and academic capacity to measure results.</p>
+                        <p style="font-size: 0.95rem; margin-bottom: 0;"><strong style="color: var(--text-main);">Primary Market (Mexico City):</strong> Largest urban pet market in the country with high mobility. Portable credentials generate immediate value for owners and vets.</p>
                     </div>
                 </div>
                 
@@ -763,9 +817,9 @@
                     <h3 style="color: var(--secondary);">5.3 Scaling Ecosystem</h3>
                     <div class="glass-card" style="padding: 24px; height: calc(100% - 44px);">
                         <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px; font-size: 0.9rem;">
-                            <li><strong style="color: white;"><i class="fa-solid fa-server" style="color: var(--secondary); margin-right: 8px;"></i> Shared Infrastructure:</strong> Replaces isolated databases with a shared standard of verifiable identity.</li>
-                            <li><strong style="color: white;"><i class="fa-solid fa-flask" style="color: var(--accent); margin-right: 8px;"></i> Tech Experimentation:</strong> A real-world Web3 environment for Monterrey's Innovation District.</li>
-                            <li><strong style="color: white;"><i class="fa-solid fa-rocket" style="color: #F59E0B; margin-right: 8px;"></i> Pet-Tech Entrepreneurship:</strong> Enables new business models like verifiable insurance.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-server" style="color: var(--secondary); margin-right: 8px;"></i> Shared Infrastructure:</strong> Replaces isolated databases with a shared standard of verifiable identity.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-flask" style="color: var(--accent); margin-right: 8px;"></i> Tech Experimentation:</strong> A real-world Web3 environment for Monterrey's Innovation District.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-rocket" style="color: #F59E0B; margin-right: 8px;"></i> Pet-Tech Entrepreneurship:</strong> Enables new business models like verifiable insurance.</li>
                         </ul>
                     </div>
                 </div>
@@ -777,9 +831,9 @@
                     <div class="glass-card" style="padding: 24px;">
                         <p style="font-size: 0.9rem; margin-bottom: 16px;">Three mechanisms feed the DAO treasury:</p>
                         <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 20px; margin:0; display: flex; flex-direction: column; gap: 8px;">
-                            <li><strong>Identity registration fee:</strong> Minimal fee when minting NFT.</li>
-                            <li><strong>Credential issuance fees:</strong> Paid by vets issuing records.</li>
-                            <li><strong>API & verification access fees:</strong> Paid by airlines/insurers querying at scale.</li>
+                            <li><strong style="color: var(--text-main);">Identity registration fee:</strong> Minimal fee when minting NFT.</li>
+                            <li><strong style="color: var(--text-main);">Credential issuance fees:</strong> Paid by vets issuing records.</li>
+                            <li><strong style="color: var(--text-main);">API & verification access fees:</strong> Paid by airlines/insurers querying at scale.</li>
                         </ul>
                     </div>
                 </div>
@@ -787,8 +841,8 @@
                 <div class="animate-item" style="animation-delay: 0.5s;">
                     <h3 style="color: #F59E0B;">5.7 & 5.8 Broader Impact</h3>
                     <div class="glass-card" style="padding: 24px;">
-                        <p style="font-size: 0.9rem; margin-bottom: 16px;"><strong>Clinical & Social:</strong> 35% of vet consults lack verified history. PAW Chain reduces duplicate treatments and enables emergency tracking. It democratizes credibility.</p>
-                        <p style="font-size: 0.9rem; margin-bottom: 0;"><strong>Ethereum Ecosystem:</strong> Proves Ethereum solves coordination problems in massive real-economy markets beyond DeFi, creating a regional standard.</p>
+                        <p style="font-size: 0.9rem; margin-bottom: 16px;"><strong style="color: var(--text-main);">Clinical & Social:</strong> 35% of vet consults lack verified history. PAW Chain reduces duplicate treatments and enables emergency tracking. It democratizes credibility.</p>
+                        <p style="font-size: 0.9rem; margin-bottom: 0;"><strong style="color: var(--text-main);">Ethereum Ecosystem:</strong> Proves Ethereum solves coordination problems in massive real-economy markets beyond DeFi, creating a regional standard.</p>
                     </div>
                 </div>
             </div>
@@ -836,15 +890,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr><td><strong>1. Education</strong></td><td>Community understands problem</td><td>Presentation & glossary</td></tr>
-                            <tr><td><strong>2. Onboarding</strong></td><td>Reduce protocol entry friction</td><td>15+ wallets on Base</td></tr>
-                            <tr><td><strong>3. Registration</strong></td><td>Capture profiles & metadata</td><td>Schema approved by PIP-001</td></tr>
-                            <tr><td><strong>4. Minting</strong></td><td>Issue ERC-721 tokens</td><td>10–20 tokens minted</td></tr>
-                            <tr><td><strong>5. Verification</strong></td><td>Give immediate visual utility</td><td>Active QR per pet</td></tr>
-                            <tr><td><strong>6. Credentials</strong></td><td>Add clinical value to profile</td><td>Issued credential examples</td></tr>
-                            <tr><td><strong>7. Transfer</strong></td><td>Demonstrate traceability</td><td>Live transfer demo</td></tr>
-                            <tr><td><strong>8. Governance</strong></td><td>Execute proposal cycle</td><td>3–4 PIPs published</td></tr>
-                            <tr><td><strong>9. Evaluation</strong></td><td>Define scale roadmap</td><td>Final report & metrics</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">1. Education</strong></td><td>Community understands problem</td><td>Presentation & glossary</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">2. Onboarding</strong></td><td>Reduce protocol entry friction</td><td>15+ wallets on Base</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">3. Registration</strong></td><td>Capture profiles & metadata</td><td>Schema approved by PIP-001</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">4. Minting</strong></td><td>Issue ERC-721 tokens</td><td>10–20 tokens minted</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">5. Verification</strong></td><td>Give immediate visual utility</td><td>Active QR per pet</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">6. Credentials</strong></td><td>Add clinical value to profile</td><td>Issued credential examples</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">7. Transfer</strong></td><td>Demonstrate traceability</td><td>Live transfer demo</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">8. Governance</strong></td><td>Execute proposal cycle</td><td>3–4 PIPs published</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">9. Evaluation</strong></td><td>Define scale roadmap</td><td>Final report & metrics</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -854,16 +908,16 @@
                 <h3 style="color: var(--accent);">6.3 Post-Pilot Roadmap</h3>
                 <div class="timeline" style="margin-top: 24px;">
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">Phase 1 · Now:</strong> EGADE / Tec pilot · 20 pets · 20 wallets · Travel Clearance demo.
+                        <strong style="color: var(--text-main);">Phase 1 · Now:</strong> EGADE / Tec pilot · 20 pets · 20 wallets · Travel Clearance demo.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">Phase 2 · 3–6 months:</strong> National Tec network expansion · First certified Validators in CDMX and MTY.
+                        <strong style="color: var(--text-main);">Phase 2 · 3–6 months:</strong> National Tec network expansion · First certified Validators in CDMX and MTY.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: white;">Phase 3 · 6–18 months:</strong> Mexican airline integration · SENASICA API · 500+ users · 20 validators.
+                        <strong style="color: var(--text-main);">Phase 3 · 6–18 months:</strong> Mexican airline integration · SENASICA API · 500+ users · 20 validators.
                     </div>
                     <div class="timeline-item" style="margin-bottom: 0;">
-                        <strong style="color: white;">Phase 4 · 18–36 months:</strong> Latin America scaling · 200M+ pets · Mature DAO · Community treasury.
+                        <strong style="color: var(--text-main);">Phase 4 · 18–36 months:</strong> Latin America scaling · 200M+ pets · Mature DAO · Community treasury.
                     </div>
                 </div>
             </div>
@@ -914,7 +968,7 @@
             </div>
 
             <div class="animate-item" style="animation-delay: 0.3s; margin-top: 40px;">
-                <div class="glass-card" style="background: linear-gradient(145deg, rgba(98, 126, 234, 0.05), rgba(139, 92, 246, 0.05)); border-color: rgba(98, 126, 234, 0.2);">
+                <div class="glass-card" style="background: var(--table-bg); border-color: rgba(98, 126, 234, 0.2);">
                     <h3 style="margin-bottom: 16px; color: var(--secondary);">7.2 Why Ethereum Foundation ESP</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 24px;">PAW Chain is precisely the type of project the Ecosystem Support Program was designed to fund:</p>
                     <div class="grid-2" style="margin-bottom:0;">
@@ -950,11 +1004,11 @@
                     <p style="font-size: 1.05rem;">The Monterrey Innovation District, Tec de Monterrey network, and Mexico's pet owners represent the most favorable adoption environment in LatAm for this protocol.</p>
                 </div>
                 
-                <div class="glass-card animate-item" style="animation-delay: 0.2s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: linear-gradient(145deg, rgba(98, 126, 234, 0.1), rgba(139, 92, 246, 0.1)); border-color: var(--primary); height: 100%; margin-bottom:0;">
+                <div class="glass-card animate-item" style="animation-delay: 0.2s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--table-bg); border-color: var(--primary); height: 100%; margin-bottom:0;">
                     <h3 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 24px; border: none; padding: 0;">80 million pets in Mexico.</h3>
                     <h3 style="font-size: 1.5rem; color: #F87171; margin-bottom: 24px;">Zero verifiable identity infrastructure.</h3>
                     <h3 style="font-size: 1.5rem; color: var(--accent); margin-bottom: 32px;">One open protocol. Built on Ethereum. Governed by the community.</h3>
-                    <p style="font-size: 1.2rem; font-style: italic; color: white;">Never lose your pet's story.</p>
+                    <p style="font-size: 1.2rem; font-style: italic; color: var(--text-main);">Never lose your pet's story.</p>
                 </div>
             </div>
             
@@ -966,9 +1020,10 @@
 
     </main>
 
-    <!-- Tab Switching Logic -->
+    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Tab Switching Logic
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabPanes = document.querySelectorAll('.tab-pane');
 
@@ -992,6 +1047,29 @@
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                 });
+            });
+
+            // Theme Toggle Logic
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const savedTheme = localStorage.getItem('pawchain-theme') || 'dark';
+            
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'light') {
+                    themeToggleBtn.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
+                } else {
+                    themeToggleBtn.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
+                }
+                localStorage.setItem('pawchain-theme', theme);
+            }
+            
+            // Set initial theme
+            setTheme(savedTheme);
+            
+            // Listen for clicks on the toggle button
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                setTheme(currentTheme === 'dark' ? 'light' : 'dark');
             });
         });
     </script>
