@@ -691,78 +691,91 @@
         <div id="governance" class="tab-pane">
             <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-landmark"></i> 4. Governance Model</h2>
             
-            <p class="animate-item" style="animation-delay: 0.1s; margin-bottom: 32px; font-size: 1.05rem;">Adopts the most proven model in Ethereum: off-chain voting via Snapshot followed by on-chain execution through a multisig.</p>
+            <h3 class="animate-item" style="animation-delay: 0.1s; color: var(--primary); margin-bottom: 16px;">4.1 The Participants</h3>
+            <p class="animate-item" style="animation-delay: 0.2s; margin-bottom: 32px; font-size: 1.05rem;">Not everyone has the same role or voting power. The ecosystem is divided into four specific actors:</p>
 
-            <h3 class="animate-item" style="animation-delay: 0.2s; color: var(--primary);">4.1 Voting Weights (Layer 1: Decides WHAT the protocol does)</h3>
             <div class="grid-4">
-                <div class="glass-card text-center animate-item" style="animation-delay: 0.3s; padding: 24px; text-align: center;">
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.3s; padding: 24px;">
                     <i class="fa-solid fa-user fa-2x" style="color: var(--primary); margin-bottom: 16px;"></i>
-                    <h4 style="margin-bottom: 4px;">Pet Owner</h4>
-                    <div class="kpi-value gradient-text">1</div>
-                    <p style="font-size: 0.8rem; margin:0;">Vote per identity</p>
+                    <h4 style="margin-bottom: 8px;">Pet Owners</h4>
+                    <p style="font-size: 0.85rem; margin:0; color: var(--text-muted);">Use the protocol to register their animals.</p>
                 </div>
-                <div class="glass-card text-center animate-item" style="animation-delay: 0.4s; padding: 24px; text-align: center;">
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.4s; padding: 24px;">
                     <i class="fa-solid fa-user-doctor fa-2x" style="color: var(--secondary); margin-bottom: 16px;"></i>
-                    <h4 style="margin-bottom: 4px;">Vet Validator</h4>
-                    <div class="kpi-value gradient-text">3</div>
-                    <p style="font-size: 0.8rem; margin:0;">Votes per root SBT</p>
+                    <h4 style="margin-bottom: 8px;">Veterinary Validators</h4>
+                    <p style="font-size: 0.85rem; margin:0; color: var(--text-muted);">Issue on-chain medical credentials. Higher voting weight.</p>
                 </div>
-                <div class="glass-card text-center animate-item" style="animation-delay: 0.5s; padding: 24px; text-align: center;">
-                    <i class="fa-solid fa-code fa-2x" style="color: var(--accent); margin-bottom: 16px;"></i>
-                    <h4 style="margin-bottom: 4px;">Community</h4>
-                    <div class="kpi-value gradient-text">1</div>
-                    <p style="font-size: 0.8rem; margin:0;">Vote per active wallet</p>
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.5s; padding: 24px;">
+                    <i class="fa-solid fa-building-circle-check fa-2x" style="color: var(--accent); margin-bottom: 16px;"></i>
+                    <h4 style="margin-bottom: 8px;">Institutional Verifiers</h4>
+                    <p style="font-size: 0.85rem; margin:0; color: var(--text-muted);">Strictly read and verify credentials without needing to join the DAO.</p>
                 </div>
-                <div class="glass-card text-center animate-item" style="animation-delay: 0.6s; padding: 24px; text-align: center;">
-                    <i class="fa-solid fa-building-columns fa-2x" style="color: #F59E0B; margin-bottom: 16px;"></i>
-                    <h4 style="margin-bottom: 4px;">Observer</h4>
-                    <div class="kpi-value gradient-text">0</div>
-                    <p style="font-size: 0.8rem; margin:0;">Voice only (Regulators)</p>
+                <div class="glass-card text-center animate-item" style="animation-delay: 0.6s; padding: 24px;">
+                    <i class="fa-solid fa-eye fa-2x" style="color: #F59E0B; margin-bottom: 16px;"></i>
+                    <h4 style="margin-bottom: 8px;">Institutional Observers</h4>
+                    <p style="font-size: 0.85rem; margin:0; color: var(--text-muted);">Organizations (Tec de Monterrey or FEMSA) with voice but no voting power.</p>
                 </div>
             </div>
 
-            <div class="animate-item" style="animation-delay: 0.7s; margin-bottom: 40px;">
-                <h3 style="color: var(--secondary);">Layer 2: Technical Committee</h3>
-                <div class="glass-card" style="padding: 24px;">
-                    <p style="font-size: 0.9rem; margin-bottom: 16px;">A Safe Multisig (3-of-5) that verifies on-chain execution is technically correct. It does not govern.</p>
-                    <ul style="font-size: 0.85rem; padding-left: 20px; color: var(--text-muted); margin:0;">
-                        <li>1x Founding Team</li>
-                        <li>1x Veterinary Validator</li>
-                        <li>1x Pet Owner</li>
-                        <li>1x Active Community Member</li>
-                        <li>1x Independent Tech Validator (No L1 vote)</li>
-                    </ul>
+            <h3 class="animate-item" style="animation-delay: 0.7s; color: var(--text-main); margin-top: 40px; margin-bottom: 24px;">4.2 The Two-Layer Governance System</h3>
+
+            <div class="grid-2">
+                <div class="animate-item" style="animation-delay: 0.8s;">
+                    <div class="glass-card" style="height: 100%; border-top: 4px solid var(--primary);">
+                        <h4 style="color: var(--primary); margin-bottom: 8px; font-size: 1.2rem;">Layer 1: Community Voting</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;"><em>(The Decision Makers)</em></p>
+                        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-file-signature" style="color: var(--primary); margin-right: 8px;"></i> Proposals:</strong> Anyone can submit PAW Improvement Proposals (PIPs) to change or update protocol rules.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-comments" style="color: var(--primary); margin-right: 8px;"></i> Process:</strong> PIPs are debated for 5–7 days and voted on using a tool called Snapshot.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-scale-balanced" style="color: var(--primary); margin-right: 8px;"></i> Voting Power:</strong> Veterinary Validators get 3 votes, while other eligible voters get 1 vote.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-shield" style="color: var(--primary); margin-right: 8px;"></i> Security:</strong> No single institution can hold more than 20% of the validator pool to prevent centralized capture.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="animate-item" style="animation-delay: 0.9s;">
+                    <div class="glass-card" style="height: 100%; border-top: 4px solid var(--secondary);">
+                        <h4 style="color: var(--secondary); margin-bottom: 8px; font-size: 1.2rem;">Layer 2: Technical Committee</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;"><em>(The Safety Check)</em></p>
+                        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px;">
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-signature" style="color: var(--secondary); margin-right: 8px;"></i> Execution:</strong> A 5-person multisig wallet (requiring 3 signatures to act) handles the actual on-chain execution.</li>
+                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-ban" style="color: #F87171; margin-right: 8px;"></i> Limitation:</strong> This committee cannot override a community vote. Their sole purpose is to verify that the execution is correct and introduces no code vulnerabilities.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div class="animate-item" style="animation-delay: 0.8s; margin-bottom: 40px;">
-                <h3 style="color: var(--primary);">4.2 Institutional Verifiers (Consume Without Governing)</h3>
-                <div class="grid-4" style="margin-top: 16px;">
+            <!-- 4.3 Institutional Verifiers -->
+            <div class="animate-item" style="animation-delay: 1.0s; margin-top: 40px; margin-bottom: 40px;">
+                <h3 style="color: var(--accent); margin-bottom: 16px;">4.3 Institutional Verifiers (Consume Without Governing)</h3>
+                <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px;">Entities that strictly read and verify credentials without needing to join the DAO:</p>
+                <div class="grid-4">
                     <div class="glass-card" style="padding: 20px; margin-bottom:0; text-align: center;">
                         <img src="airlines.jpg" alt="Airlines Logo" style="height: 65px; width: auto; max-width: 100%; object-fit: contain; margin: 0 auto 16px auto; display: block; border-radius: 6px;">
                         <h4 style="color: var(--primary); margin-bottom: 8px;">Airlines</h4>
-                        <p style="font-size: 0.8rem; margin:0; text-align: left;">Scan QR to verify vaccines & certs instantly. Scales protocol via market inertia.</p>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted); text-align: left;">Scan QR to verify vaccines & certs instantly. Scales protocol via market inertia.</p>
                     </div>
                     <div class="glass-card" style="padding: 20px; margin-bottom:0; text-align: center;">
                         <img src="senasica.jpg" alt="SENASICA Logo" style="height: 65px; width: auto; max-width: 100%; object-fit: contain; margin: 0 auto 16px auto; display: block; border-radius: 6px;">
                         <h4 style="color: var(--secondary); margin-bottom: 8px;">SENASICA</h4>
-                        <p style="font-size: 0.8rem; margin:0; text-align: left;">Verifier at borders and potential Authorized Emitter of Export Certs on-chain.</p>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted); text-align: left;">Verifier at borders and potential Authorized Emitter of Export Certs on-chain.</p>
                     </div>
                     <div class="glass-card" style="padding: 20px; margin-bottom:0; text-align: center;">
                         <img src="insurers.jpg" alt="Insurers Logo" style="height: 65px; width: auto; max-width: 100%; object-fit: contain; margin: 0 auto 16px auto; display: block; border-radius: 6px;">
                         <h4 style="color: var(--accent); margin-bottom: 8px;">Insurers</h4>
-                        <p style="font-size: 0.8rem; margin:0; text-align: left;">Authentic data reduces claim fraud. Potential first payers for premium API access.</p>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted); text-align: left;">Authentic data reduces claim fraud. Potential first payers for premium API access.</p>
                     </div>
                     <div class="glass-card" style="padding: 20px; margin-bottom:0; text-align: center;">
                         <img src="customs.jpg" alt="Customs Logo" style="height: 65px; width: auto; max-width: 100%; object-fit: contain; margin: 0 auto 16px auto; display: block; border-radius: 6px;">
                         <h4 style="color: #F59E0B; margin-bottom: 8px;">Customs</h4>
-                        <p style="font-size: 0.8rem; margin:0; text-align: left;">US CBP & EU TRACES compatibility via open Ethereum standard.</p>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted); text-align: left;">US CBP & EU TRACES compatibility via open Ethereum standard.</p>
                     </div>
                 </div>
             </div>
 
-            <div class="animate-item" style="animation-delay: 0.9s;">
-                <h3 style="color: var(--accent);">4.3 Progressive Decentralization</h3>
+            <!-- 4.4 Progressive Decentralization -->
+            <div class="animate-item" style="animation-delay: 1.1s;">
+                <h3 style="color: #F59E0B;">4.4 Progressive Decentralization</h3>
                 <div class="timeline" style="margin-top: 24px;">
                     <div class="timeline-item" style="margin-bottom: 16px;">
                         <strong style="color: var(--text-main);">1. Pilot (&lt; 50 wallets):</strong> Founding team holds 2 multisig signatures. PIPs are recommendations.
@@ -1030,10 +1043,10 @@
             <div class="grid-3">
                 <!-- Founder 1 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.2s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
-                    <img src="tania.jpg" alt="Tania Cordero" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <img src="tania.jpeg" alt="Tania Cordero" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Tania Cordero</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
-                    <a href="https://www.linkedin.com/in/taniacorderoromero/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base%3Brm7ttm4ZSeSHG0I%2B0vLWgw%3D%3D" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/taniacorderoromero/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
                 <!-- Founder 2 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.3s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
@@ -1044,24 +1057,24 @@
                 </div>
                 <!-- Founder 3 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.4s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
-                    <img src="founder3.jpg" alt="Founder 3" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                    <h4 style="margin-bottom: 4px;">Founder Name 3</h4>
+                    <img src="emma.jpeg" alt="Emmanuel Herrera" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-bottom: 4px;">Emmanuel Herrera</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
-                    <a href="https://www.linkedin.com/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/herrera-emmanuel/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
                 <!-- Founder 4 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.5s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
-                    <img src="founder4.jpg" alt="Founder 4" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                    <h4 style="margin-bottom: 4px;">Founder Name 4</h4>
+                    <img src="bren.jpeg" alt="Brenda Meza" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-bottom: 4px;">Brenda Meza</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
-                    <a href="https://www.linkedin.com/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/brenda-meza-suastegui/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
                 <!-- Founder 5 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.6s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
-                    <img src="founder5.jpg" alt="Founder 5" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                    <h4 style="margin-bottom: 4px;">Founder Name 5</h4>
+                    <img src="jaime.jpeg" alt="Jaime Rendón" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <h4 style="margin-bottom: 4px;">Jaime Rendón</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
-                    <a href="https://www.linkedin.com/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/jaime-rend%C3%B3n-morones-881225a3/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
             </div>
         </div>
