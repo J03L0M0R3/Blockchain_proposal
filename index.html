@@ -10,20 +10,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* Modo Oscuro por defecto */
-            --bg-color: #0B0E14;
-            --surface-color: #151A25;
-            --primary: #627EEA; /* Ethereum Blue */
-            --secondary: #8B5CF6; /* Vibrant Purple */
-            --accent: #10B981; /* Success Green */
+            /* Modo Oscuro por defecto (Adaptado al logo PAW Chain) */
+            --bg-color: #060B14; /* Azul marino súper oscuro */
+            --surface-color: #0C1524;
+            --primary: #00E0C6; /* Verde/Cian PAW Chain */
+            --secondary: #00BFFF; /* Azul de las huellas */
+            --accent: #00E676; /* Verde brillante para checks */
             --text-main: #F3F4F6;
             --text-muted: #9CA3AF;
-            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-bg: rgba(255, 255, 255, 0.02);
             --glass-border: rgba(255, 255, 255, 0.05);
-            --sidebar-bg: rgba(21, 26, 37, 0.95);
-            --table-bg: rgba(0, 0, 0, 0.2);
+            --sidebar-bg: rgba(6, 11, 20, 0.95);
+            --table-bg: rgba(0, 0, 0, 0.25);
             --img-bg: rgba(255, 255, 255, 0.05);
-            --hover-bg: rgba(255, 255, 255, 0.02);
+            --hover-bg: rgba(255, 255, 255, 0.03);
             --sidebar-width: 300px;
         }
 
@@ -31,9 +31,9 @@
         [data-theme="light"] {
             --bg-color: #F9FAFB;
             --surface-color: #FFFFFF;
-            --primary: #4F46E5; /* Ajuste ligero para mejor contraste */
-            --secondary: #7C3AED;
-            --accent: #059669;
+            --primary: #009987; /* Verde/Cian más oscuro para contraste */
+            --secondary: #0077B3; /* Azul más profundo */
+            --accent: #00994D;
             --text-main: #111827;
             --text-muted: #4B5563;
             --glass-bg: rgba(255, 255, 255, 0.9);
@@ -143,7 +143,7 @@
         }
 
         .nav-links button.active {
-            background: linear-gradient(90deg, rgba(98, 126, 234, 0.15), transparent);
+            background: linear-gradient(90deg, rgba(0, 224, 198, 0.15), transparent);
             color: var(--primary);
             border-left: 4px solid var(--primary);
             border-radius: 0 12px 12px 0;
@@ -204,8 +204,8 @@
 
         .glass-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-            border-color: rgba(98, 126, 234, 0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            border-color: rgba(0, 224, 198, 0.4);
         }
 
         .glass-table-wrapper {
@@ -231,7 +231,7 @@
         }
 
         .glass-table th {
-            background: rgba(98, 126, 234, 0.1);
+            background: rgba(0, 224, 198, 0.1);
             color: var(--primary);
             font-weight: 600;
         }
@@ -288,20 +288,20 @@
         /* NFT Card */
         .nft-card {
             background: var(--glass-bg);
-            border: 1px solid rgba(98, 126, 234, 0.4);
+            border: 1px solid rgba(0, 224, 198, 0.4);
             border-radius: 24px;
             padding: 16px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
             max-width: 350px;
             transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s ease;
         }
         .nft-card:hover {
             transform: scale(1.02) translateY(-10px);
-            box-shadow: 0 30px 60px rgba(98, 126, 234, 0.2);
+            box-shadow: 0 30px 60px rgba(0, 224, 198, 0.15);
         }
         .nft-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 16px; }
         .nft-info { padding: 20px 8px 8px 8px; }
-        .id-badge { background: rgba(98, 126, 234, 0.2); color: var(--primary); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; display:inline-block;}
+        .id-badge { background: rgba(0, 224, 198, 0.15); color: var(--primary); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; display:inline-block;}
 
         /* Timeline */
         .timeline { border-left: 2px solid var(--primary); padding-left: 24px; margin-left: 12px; }
@@ -349,6 +349,37 @@
             border-color: var(--primary);
         }
 
+        /* Vote Buttons Hover Effects */
+        .vote-btn {
+            border: 1px solid var(--primary);
+            color: var(--text-main);
+            background: transparent;
+            padding: 16px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .vote-btn .vote-letter {
+            font-size: 1.5rem;
+            margin-right: 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            transition: color 0.3s ease;
+        }
+        .vote-btn:hover {
+            background: var(--primary);
+            color: #000;
+            transform: scale(1.02);
+            box-shadow: 0 6px 15px rgba(0, 224, 198, 0.3);
+        }
+        .vote-btn:hover .vote-letter {
+            color: #000;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             .tab-pane { padding: 40px; }
@@ -390,35 +421,36 @@
             <i class="fa-solid fa-paw" style="color: var(--primary);"></i> PAW Chain
         </div>
         <nav class="nav-links">
-            <button class="tab-btn active" data-target="abstract">
-                <i class="fa-solid fa-house"></i> Abstract
+            <!-- Changed "Abstract" to "Home" -->
+            <button class="tab-btn active" data-target="home">
+                <i class="fa-solid fa-house"></i> Home
             </button>
             <button class="tab-btn" data-target="problem">
-                <i class="fa-solid fa-triangle-exclamation"></i> 1. Problem Statement
+                <i class="fa-solid fa-triangle-exclamation"></i> Problem Statement
             </button>
             <button class="tab-btn" data-target="theory">
-                <i class="fa-solid fa-network-wired"></i> 2. DAO Theory Applied
+                <i class="fa-solid fa-network-wired"></i> DAO Theory Applied
             </button>
             <button class="tab-btn" data-target="protocol">
-                <i class="fa-solid fa-layer-group"></i> 3. Protocol Design
+                <i class="fa-solid fa-layer-group"></i> Protocol Design
             </button>
             <button class="tab-btn" data-target="governance">
-                <i class="fa-solid fa-landmark"></i> 4. Governance Model
-            </button>
-            <button class="tab-btn" data-target="impact">
-                <i class="fa-solid fa-globe"></i> 5. Economic & Social Impact
+                <i class="fa-solid fa-landmark"></i> Governance Model
             </button>
             <button class="tab-btn" data-target="implementation">
-                <i class="fa-solid fa-map"></i> 6. Implementation Plan
+                <i class="fa-solid fa-map"></i> Implementation Plan
+            </button>
+            <button class="tab-btn" data-target="impact">
+                <i class="fa-solid fa-globe"></i> Economic & Social Impact
             </button>
             <button class="tab-btn" data-target="funding">
-                <i class="fa-solid fa-seedling"></i> 7. Funding Request
+                <i class="fa-solid fa-seedling"></i> Funding Request
             </button>
             <button class="tab-btn" data-target="conclusion">
-                <i class="fa-brands fa-ethereum"></i> 8. Why Now. Why Ethereum.
+                <i class="fa-solid fa-check-to-slot"></i> Community Validation
             </button>
             <button class="tab-btn" data-target="founders">
-                <i class="fa-solid fa-users"></i> 9. Founders
+                <i class="fa-solid fa-users"></i> Founders
             </button>
         </nav>
         <div style="margin-top: auto; padding: 24px; text-align: center; color: var(--text-muted); font-size: 0.8rem;">
@@ -434,30 +466,25 @@
     <!-- Main Content Area -->
     <main class="main-content">
 
-        <!-- Abstract Tab -->
-        <div id="abstract" class="tab-pane active">
-            <div class="animate-item" style="animation-delay: 0s; display:inline-block; padding: 6px 12px; background: rgba(98, 126, 234, 0.1); border: 1px solid var(--primary); border-radius: 20px; font-size: 0.85rem; margin-bottom: 24px; color: var(--primary); font-weight: 600;">
-                DAO Protocol Proposal · Public Open Infrastructure
-            </div>
-            <h1 class="animate-item" style="animation-delay: 0.1s;">PAW Chain <br><span class="gradient-text">Open Pet Identity</span></h1>
+        <!-- Home Tab -->
+        <div id="home" class="tab-pane active">
+            <h1 class="animate-item" style="animation-delay: 0s; margin-bottom: 40px;">PAW Chain <br><span class="gradient-text">Open Pet Identity</span></h1>
             
-            <div class="glass-card animate-item" style="animation-delay: 0.2s; padding: 0; overflow: hidden; height: 70vh; min-height: 500px; border-color: var(--primary); box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
-                <!-- La presentación interactiva embebida -->
-                <iframe src="PAW_Chain_Video_v3.html" width="100%" height="100%" style="border: none; display: block; background: #000;"></iframe>
+            <!-- Video iframe taking up prominent space -->
+            <div class="animate-item" style="animation-delay: 0.1s; width: 100%; max-width: 1200px;">
+                <div style="border-radius: 16px; overflow: hidden; border: 1px solid var(--glass-border); box-shadow: 0 20px 50px rgba(0,0,0,0.4); background: #000; width: 100%; aspect-ratio: 16/9; position: relative;">
+                    <iframe src="PAW_Chain_Video_v3.html" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+                </div>
             </div>
-            
-            <p class="animate-item" style="animation-delay: 0.3s; text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-top: 16px;">
-                <i class="fa-solid fa-keyboard" style="margin-right: 6px; color: var(--primary);"></i> Haz clic en el reproductor y usa la barra espaciadora o las flechas para avanzar en la presentación.
-            </p>
         </div>
 
-        <!-- 1. Problem Statement Tab -->
+        <!-- Problem Statement Tab -->
         <div id="problem" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-triangle-exclamation"></i> 1. Problem Statement</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-triangle-exclamation"></i> Problem Statement</h2>
             
             <div class="grid-2">
                 <div class="animate-item" style="animation-delay: 0.1s;">
-                    <h3 style="color: var(--primary);">1.1 The Coordination Failure</h3>
+                    <h3 style="color: var(--primary);">The Coordination Failure</h3>
                     <p>Mexico has over <strong>80 million pets</strong> (69.8% of households). The pet services market is projected to reach $6.3 billion USD by 2032.</p>
                     <p>Yet, the information infrastructure is deeply fragmented. Vaccination records get lost. Veterinary histories are siloed within individual clinics. Ownership transfers lack verifiable trails. <strong>Trust is rebuilt from scratch every time.</strong></p>
                     <div class="glass-card" style="padding: 20px; border-left: 4px solid var(--accent); border-radius: 0 16px 16px 0; margin-top: 24px;">
@@ -466,7 +493,7 @@
                 </div>
                 
                 <div class="animate-item" style="animation-delay: 0.2s;">
-                    <h3 style="color: var(--secondary);">1.2 Why Existing Solutions Fail</h3>
+                    <h3 style="color: var(--secondary);">Why Existing Solutions Fail</h3>
                     <div class="glass-card" style="margin-bottom: 16px;">
                         <h4 style="color: #F87171;"><i class="fa-solid fa-xmark"></i> Centralized Databases</h4>
                         <p style="font-size: 0.9rem; margin-bottom:0;">They have a single controller whose incentives do not always align with all actors. They can change access rules, charge fees, be hacked, or shut down. They require everyone to trust the same central authority.</p>
@@ -479,7 +506,7 @@
             </div>
 
             <div class="animate-item" style="animation-delay: 0.3s;">
-                <h3 style="color: var(--primary); margin-top: 24px;">1.3 The Travel Clearance Problem</h3>
+                <h3 style="color: var(--primary); margin-top: 24px;">The Travel Clearance Problem</h3>
                 <p>A concrete manifestation: Traveling internationally requires multiple documents from different actors, with different formats, seals, and expiration dates. PAW Chain digitizes them into cryptographically signed credentials verifiable via QR scan.</p>
 
                 <div class="glass-table-wrapper">
@@ -518,9 +545,9 @@
             </div>
         </div>
 
-        <!-- 2. DAO Theory Tab -->
+        <!-- DAO Theory Tab -->
         <div id="theory" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-network-wired"></i> 2. DAO Theory Applied</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-network-wired"></i> DAO Theory Applied</h2>
             
             <p class="animate-item" style="animation-delay: 0.1s; margin-bottom: 32px; font-size: 1.1rem; max-width: 800px;">A DAO is not fundamentally a voting tool. It is a coordination mechanism for actors who share a common interest but lack a common trust infrastructure.</p>
             
@@ -544,7 +571,7 @@
 
             <div class="grid-2">
                 <div class="animate-item" style="animation-delay: 0.5s;">
-                    <h3 style="color: var(--primary);">2.2 Why Blockchain?</h3>
+                    <h3 style="color: var(--primary);">Why Blockchain?</h3>
                     <p>The answer is economic and strategic, not technical. A centralized database has an owner with asymmetric power. A smart contract on Ethereum is the equivalent of a public notary that never closes, never makes errors, and can be audited by anyone.</p>
                     <div class="glass-card" style="padding: 24px; border-top: 4px solid var(--secondary);">
                         <p style="margin:0; font-weight: 600; font-size: 1.05rem; text-align: center;">The question is whether the problem requires coordination between actors who cannot trust a common central authority. If yes, a DAO on Ethereum is the only structurally correct solution.</p>
@@ -552,7 +579,7 @@
                 </div>
 
                 <div class="animate-item" style="animation-delay: 0.6s;">
-                    <h3 style="color: var(--accent);">2.3 Monterrey Innovation District</h3>
+                    <h3 style="color: var(--accent);">Monterrey Innovation District</h3>
                     <p>The District is itself an experiment in coordination between heterogeneous actors. It provides the perfect reference ecosystem.</p>
                     <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 12px;">
                         <li style="display: flex; gap: 12px;"><i class="fa-solid fa-microchip" style="color: var(--primary); margin-top: 4px;"></i> <div><strong style="color: var(--text-main);">Technical talent:</strong> Tec de Monterrey produces more engineers than any other Mexican institution.</div></li>
@@ -563,9 +590,9 @@
             </div>
         </div>
 
-        <!-- 3. Protocol Design Tab -->
+        <!-- Protocol Design Tab -->
         <div id="protocol" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-layer-group"></i> 3. Protocol Design</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-layer-group"></i> Protocol Design</h2>
             
             <p class="animate-item" style="animation-delay: 0.1s; margin-bottom: 32px; font-size: 1.05rem;">PAW Chain is open protocol infrastructure—a composable identity layer on which any application, clinic, or platform can build without requesting authorization.</p>
 
@@ -590,7 +617,7 @@
 
             <div class="grid-2">
                 <div class="animate-item" style="animation-delay: 0.6s;">
-                    <h3 style="color: var(--primary);">3.3 Technical Architecture</h3>
+                    <h3 style="color: var(--primary);">Technical Architecture</h3>
                     <div class="glass-table-wrapper">
                         <table class="glass-table">
                             <tbody>
@@ -616,7 +643,7 @@
                 </div>
                 
                 <div class="animate-item" style="animation-delay: 0.7s;">
-                    <h3 style="color: var(--secondary);">3.4 Scope Definition</h3>
+                    <h3 style="color: var(--secondary);">Scope Definition</h3>
                     <div class="glass-card" style="padding: 24px;">
                         <h4 style="color: var(--accent);"><i class="fa-solid fa-check"></i> Pilot Includes:</h4>
                         <p style="font-size: 0.85rem; margin-bottom: 16px;">NFT identity, IPFS metadata + QR, simulated credentials, travel clearance demo, on-chain transfers, wallet-based DAO voting.</p>
@@ -627,7 +654,7 @@
             </div>
 
             <div class="animate-item" style="animation-delay: 0.8s; margin-top: 16px;">
-                <h3 style="color: var(--accent);">3.5 External Factors</h3>
+                <h3 style="color: var(--accent);">External Factors</h3>
                 <div class="grid-3">
                     <div class="glass-card" style="padding: 20px;">
                         <h4 style="color: var(--primary); margin-bottom: 8px;"><i class="fa-solid fa-gavel"></i> Regulatory</h4>
@@ -645,11 +672,11 @@
             </div>
         </div>
 
-        <!-- 4. Governance Tab -->
+        <!-- Governance Tab -->
         <div id="governance" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-landmark"></i> 4. Governance Model</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-landmark"></i> Governance Model</h2>
             
-            <h3 class="animate-item" style="animation-delay: 0.1s; color: var(--primary); margin-bottom: 16px;">4.1 The Participants</h3>
+            <h3 class="animate-item" style="animation-delay: 0.1s; color: var(--primary); margin-bottom: 16px;">The Participants</h3>
             <p class="animate-item" style="animation-delay: 0.2s; margin-bottom: 32px; font-size: 1.05rem;">Not everyone has the same role or voting power. The ecosystem is divided into four specific actors:</p>
 
             <div class="grid-4">
@@ -675,7 +702,7 @@
                 </div>
             </div>
 
-            <h3 class="animate-item" style="animation-delay: 0.7s; color: var(--text-main); margin-top: 40px; margin-bottom: 24px;">4.2 The Two-Layer Governance System</h3>
+            <h3 class="animate-item" style="animation-delay: 0.7s; color: var(--text-main); margin-top: 40px; margin-bottom: 24px;">The Two-Layer Governance System</h3>
 
             <div class="grid-2">
                 <div class="animate-item" style="animation-delay: 0.8s;">
@@ -703,9 +730,9 @@
                 </div>
             </div>
 
-            <!-- 4.3 Institutional Verifiers -->
+            <!-- Institutional Verifiers -->
             <div class="animate-item" style="animation-delay: 1.0s; margin-top: 40px; margin-bottom: 40px;">
-                <h3 style="color: var(--accent); margin-bottom: 16px;">4.3 Institutional Verifiers (Consume Without Governing)</h3>
+                <h3 style="color: var(--accent); margin-bottom: 16px;">Institutional Verifiers (Consume Without Governing)</h3>
                 <p style="font-size: 0.95rem; color: var(--text-muted); margin-bottom: 24px;">Entities that strictly read and verify credentials without needing to join the DAO:</p>
                 <div class="grid-4">
                     <div class="glass-card" style="padding: 20px; margin-bottom:0; text-align: center;">
@@ -731,9 +758,9 @@
                 </div>
             </div>
 
-            <!-- 4.4 Progressive Decentralization -->
+            <!-- Progressive Decentralization -->
             <div class="animate-item" style="animation-delay: 1.1s;">
-                <h3 style="color: #F59E0B;">4.4 Progressive Decentralization</h3>
+                <h3 style="color: #F59E0B;">Progressive Decentralization</h3>
                 <div class="timeline" style="margin-top: 24px;">
                     <div class="timeline-item" style="margin-bottom: 16px;">
                         <strong style="color: var(--text-main);">1. Pilot (&lt; 50 wallets):</strong> Founding team holds 2 multisig signatures. PIPs are recommendations.
@@ -751,9 +778,61 @@
             </div>
         </div>
 
-        <!-- 5. Economic & Social Impact Tab -->
+        <!-- Implementation Plan Tab -->
+        <div id="implementation" class="tab-pane">
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-map"></i> Implementation Plan</h2>
+            
+            <div class="animate-item" style="animation-delay: 0.1s;">
+                <h3 style="color: var(--primary);">What Has Already Been Built</h3>
+                <div class="grid-3" style="margin-top: 16px;">
+                    <a href="https://basescan.org/address/0xc4738c1b9ab1879f724f817d927fe5c977f37464" target="_blank" class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <i class="fa-brands fa-ethereum fa-2x" style="color: var(--primary); margin-bottom: 12px;"></i>
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--text-main);">Contract Deployed</h4>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted);">Base Mainnet L2 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 4px; font-size: 0.7rem;"></i></p>
+                    </a>
+                    <a href="https://opensea.io/item/base/0xc4738c1b9ab1879f724f817d927fe5c977f37464/1" target="_blank" class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                        <img src="bella.jpg" alt="Bella" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px auto; display: block; border: 2px solid var(--secondary);">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--text-main);">TOKEN #001</h4>
+                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted);">Bella (Shih Tzu) Minted <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 4px; font-size: 0.7rem;"></i></p>
+                    </a>
+                    <div class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0;">
+                        <img src="qr_encuesta.jpg" alt="QR Encuesta" style="width: 80px; height: 80px; object-fit: contain; margin: 0 auto 12px auto; display: block; border-radius: 8px; background: white; padding: 4px;">
+                        <h4 style="font-size: 1rem; margin-bottom: 8px;">Active Governance</h4>
+                        <p style="font-size: 0.8rem; margin:0;">PIP-000 Voting Live</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="animate-item" style="animation-delay: 0.2s; margin-top: 40px;">
+                <h3 style="color: var(--secondary);">Pilot Execution: 9 Sequential Stages</h3>
+                <div class="glass-table-wrapper" style="margin-top: 16px;">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Stage</th>
+                                <th>Objective</th>
+                                <th>Measurable deliverable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong style="color: var(--text-main);">1 · Education & alignment</strong></td><td><span style="color: var(--text-muted);">Community understands the problem before interacting with the protocol</span></td><td>Presentation · glossary · published narrative</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">2 · Wallet onboarding</strong></td><td><span style="color: var(--text-muted);">Reduce protocol entry friction for non-technical users</span></td><td>15+ wallets on Base Mainnet · step-by-step tutorial</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">3 · Pet registration</strong></td><td><span style="color: var(--text-muted);">Capture initial profiles and generate identity metadata</span></td><td>Functional form · metadata schema approved by PIP-001</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">4 · Identity minting</strong></td><td><span style="color: var(--text-muted);">Issue ERC-721 tokens and link to IPFS metadata</span></td><td>10–20 tokens minted · Basescan links</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">5 · QR verification</strong></td><td><span style="color: var(--text-muted);">Give immediate visible utility to the digital identity</span></td><td>Active QR per pet · functional public verification page</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">6 · Veterinary credentials</strong></td><td><span style="color: var(--text-muted);">Add clinical value to the profile via credentials</span></td><td>Health record structure · examples of issued credentials</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">7 · Ownership transfer</strong></td><td><span style="color: var(--text-muted);">Demonstrate on-chain ownership traceability</span></td><td>Live transfer demo · history visible in explorer</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">8 · Active DAO governance</strong></td><td><span style="color: var(--text-muted);">Execute complete proposal → deliberation → vote → implementation cycle</span></td><td>3–4 PIPs published · 2+ PIPs implemented</td></tr>
+                            <tr><td><strong style="color: var(--text-main);">9 · Pilot evaluation</strong></td><td><span style="color: var(--text-muted);">Measure results, document learnings, define scale roadmap</span></td><td>Final report · adoption metrics · lessons learned published</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Economic & Social Impact Tab -->
         <div id="impact" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-globe"></i> 5. Economic & Social Impact</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-globe"></i> Economic & Social Impact</h2>
             
             <div class="grid-4 animate-item" style="animation-delay: 0.1s;">
                 <div class="glass-card" style="padding: 24px; text-align: center;">
@@ -780,7 +859,7 @@
 
             <div class="grid-2">
                 <div class="animate-item" style="animation-delay: 0.2s;">
-                    <h3 style="color: var(--primary);">5.1 & 5.2 Market Strategy</h3>
+                    <h3 style="color: var(--primary);">Market Strategy</h3>
                     <div class="glass-card" style="padding: 24px; height: calc(100% - 44px);">
                         <p style="font-size: 0.95rem;"><strong style="color: var(--text-main);">Founding Community (Tec CDMX):</strong> Validates infrastructure within a high-trust environment. High digital literacy and academic capacity to measure results.</p>
                         <p style="font-size: 0.95rem; margin-bottom: 0;"><strong style="color: var(--text-main);">Primary Market (Mexico City):</strong> Largest urban pet market in the country with high mobility. Portable credentials generate immediate value for owners and vets.</p>
@@ -788,12 +867,13 @@
                 </div>
                 
                 <div class="animate-item" style="animation-delay: 0.3s;">
-                    <h3 style="color: var(--secondary);">5.3 Scaling Ecosystem</h3>
+                    <h3 style="color: var(--secondary);">Social Impact</h3>
                     <div class="glass-card" style="padding: 24px; height: calc(100% - 44px);">
-                        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px; font-size: 0.9rem;">
-                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-server" style="color: var(--secondary); margin-right: 8px;"></i> Shared Infrastructure:</strong> Replaces isolated databases with a shared standard of verifiable identity.</li>
-                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-flask" style="color: var(--accent); margin-right: 8px;"></i> Tech Experimentation:</strong> A real-world Web3 environment for Monterrey's Innovation District.</li>
-                            <li><strong style="color: var(--text-main);"><i class="fa-solid fa-rocket" style="color: #F59E0B; margin-right: 8px;"></i> Pet-Tech Entrepreneurship:</strong> Enables new business models like verifiable insurance.</li>
+                        <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px; font-size: 0.95rem;">
+                            <li style="display: flex; align-items: flex-start;"><i class="fa-solid fa-syringe" style="color: var(--secondary); margin-right: 12px; margin-top: 4px; flex-shrink: 0;"></i> <span style="color: var(--text-main);">Reduces the risk of duplicate vaccinations or treatments</span></li>
+                            <li style="display: flex; align-items: flex-start;"><i class="fa-solid fa-chart-line" style="color: var(--accent); margin-right: 12px; margin-top: 4px; flex-shrink: 0;"></i> <span style="color: var(--text-main);">Enables long-term detection of medical patterns</span></li>
+                            <li style="display: flex; align-items: flex-start;"><i class="fa-solid fa-truck-medical" style="color: #F59E0B; margin-right: 12px; margin-top: 4px; flex-shrink: 0;"></i> <span style="color: var(--text-main);">Facilitates faster diagnoses in emergency situations</span></li>
+                            <li style="display: flex; align-items: flex-start;"><i class="fa-solid fa-user-doctor" style="color: var(--primary); margin-right: 12px; margin-top: 4px; flex-shrink: 0;"></i> <span style="color: var(--text-main);">Improves coordination between veterinarians when a pet changes clinics</span></li>
                         </ul>
                     </div>
                 </div>
@@ -801,7 +881,7 @@
 
             <div class="grid-2" style="margin-top: 16px;">
                 <div class="animate-item" style="animation-delay: 0.4s;">
-                    <h3 style="color: var(--accent);">5.5 Protocol Economic Model</h3>
+                    <h3 style="color: var(--accent);">Protocol Economic Model</h3>
                     <div class="glass-card" style="padding: 24px;">
                         <p style="font-size: 0.9rem; margin-bottom: 16px;">Three mechanisms feed the DAO treasury:</p>
                         <ul style="font-size: 0.9rem; color: var(--text-muted); padding-left: 20px; margin:0; display: flex; flex-direction: column; gap: 8px;">
@@ -813,7 +893,7 @@
                 </div>
 
                 <div class="animate-item" style="animation-delay: 0.5s;">
-                    <h3 style="color: #F59E0B;">5.7 & 5.8 Broader Impact</h3>
+                    <h3 style="color: #F59E0B;">Broader Impact</h3>
                     <div class="glass-card" style="padding: 24px;">
                         <p style="font-size: 0.9rem; margin-bottom: 16px;"><strong style="color: var(--text-main);">Clinical & Social:</strong> 35% of vet consults lack verified history. PAW Chain reduces duplicate treatments and enables emergency tracking. It democratizes credibility.</p>
                         <p style="font-size: 0.9rem; margin-bottom: 0;"><strong style="color: var(--text-main);">Ethereum Ecosystem:</strong> Proves Ethereum solves coordination problems in massive real-economy markets beyond DeFi, creating a regional standard.</p>
@@ -822,123 +902,113 @@
             </div>
         </div>
 
-        <!-- 6. Implementation Plan Tab -->
-        <div id="implementation" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-map"></i> 6. Implementation Plan</h2>
-            
-            <div class="animate-item" style="animation-delay: 0.1s;">
-                <h3 style="color: var(--primary);">6.1 What Has Already Been Built</h3>
-                <div class="grid-3" style="margin-top: 16px;">
-                    <a href="https://basescan.org/address/0xc4738c1b9ab1879f724f817d927fe5c977f37464" target="_blank" class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                        <i class="fa-brands fa-ethereum fa-2x" style="color: var(--primary); margin-bottom: 12px;"></i>
-                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--text-main);">Contract Deployed</h4>
-                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted);">Base Mainnet L2 <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 4px; font-size: 0.7rem;"></i></p>
-                    </a>
-                    <a href="https://opensea.io/item/base/0xc4738c1b9ab1879f724f817d927fe5c977f37464/1" target="_blank" class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0; display: block; transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                        <img src="bella.jpg" alt="Bella" style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px auto; display: block; border: 2px solid var(--secondary);">
-                        <h4 style="font-size: 1rem; margin-bottom: 8px; color: var(--text-main);">TOKEN #001</h4>
-                        <p style="font-size: 0.8rem; margin:0; color: var(--text-muted);">Bella (Shih Tzu) Minted <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left: 4px; font-size: 0.7rem;"></i></p>
-                    </a>
-                    <div class="glass-card" style="padding: 20px; text-align: center; margin-bottom:0;">
-                        <img src="qr_encuesta.jpg" alt="QR Encuesta" style="width: 80px; height: 80px; object-fit: contain; margin: 0 auto 12px auto; display: block; border-radius: 8px; background: white; padding: 4px;">
-                        <h4 style="font-size: 1rem; margin-bottom: 8px;">Active Governance</h4>
-                        <p style="font-size: 0.8rem; margin:0;">PIP-000 Voting Live</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="animate-item" style="animation-delay: 0.2s; margin-top: 40px;">
-                <h3 style="color: var(--secondary);">6.2 Pilot Execution: 9 Sequential Stages</h3>
-                <div class="glass-table-wrapper" style="margin-top: 16px;">
-                    <table class="glass-table">
-                        <thead>
-                            <tr>
-                                <th>Stage</th>
-                                <th>Objective</th>
-                                <th>Measurable Deliverable</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><strong style="color: var(--text-main);">1. Education</strong></td><td>Community understands problem</td><td>Presentation & glossary</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">2. Onboarding</strong></td><td>Reduce protocol entry friction</td><td>15+ wallets on Base</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">3. Registration</strong></td><td>Capture profiles & metadata</td><td>Schema approved by PIP-001</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">4. Minting</strong></td><td>Issue ERC-721 tokens</td><td>10–20 tokens minted</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">5. Verification</strong></td><td>Give immediate visual utility</td><td>Active QR per pet</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">6. Credentials</strong></td><td>Add clinical value to profile</td><td>Issued credential examples</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">7. Transfer</strong></td><td>Demonstrate traceability</td><td>Live transfer demo</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">8. Governance</strong></td><td>Execute proposal cycle</td><td>3–4 PIPs published</td></tr>
-                            <tr><td><strong style="color: var(--text-main);">9. Evaluation</strong></td><td>Define scale roadmap</td><td>Final report & metrics</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="animate-item" style="animation-delay: 0.3s; margin-top: 40px;">
-                <h3 style="color: var(--accent);">6.3 Post-Pilot Roadmap</h3>
-                <div class="timeline" style="margin-top: 24px;">
-                    <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: var(--text-main);">Phase 1 · Now:</strong> EGADE / Tec pilot · 20 pets · 20 wallets · Travel Clearance demo.
-                    </div>
-                    <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: var(--text-main);">Phase 2 · 3–6 months:</strong> National Tec network expansion · First certified Validators in CDMX and MTY.
-                    </div>
-                    <div class="timeline-item" style="margin-bottom: 16px;">
-                        <strong style="color: var(--text-main);">Phase 3 · 6–18 months:</strong> Mexican airline integration · SENASICA API · 500+ users · 20 validators.
-                    </div>
-                    <div class="timeline-item" style="margin-bottom: 0;">
-                        <strong style="color: var(--text-main);">Phase 4 · 18–36 months:</strong> Latin America scaling · 200M+ pets · Mature DAO · Community treasury.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 7. Funding Request Tab -->
+        <!-- Funding Request Tab -->
         <div id="funding" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-seedling"></i> 7. Funding Request</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-seedling"></i> Funding Request</h2>
             
             <p class="animate-item" style="animation-delay: 0.1s; font-size: 1.1rem; margin-bottom: 32px;">
                 This proposal requests ecosystem support to move PAW Chain from validated concept to deployed production protocol over a six-month horizon.
             </p>
 
             <div class="animate-item" style="animation-delay: 0.2s;">
-                <h3 style="color: var(--primary);">7.1 Use of Funds (6 Parallel Streams)</h3>
-                <div class="grid-3" style="margin-top: 24px;">
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--primary);"><i class="fa-solid fa-code"></i> Smart Contracts</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">Production ERC-721 + credential registry.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Months 1–3</span>
+                <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 16px; flex-wrap: wrap; gap: 16px;">
+                    <div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">Ethereum Foundation · Ecosystem Support Program</p>
+                        <h3 style="color: var(--secondary); margin: 0;">PAW Chain · Funding Request</h3>
                     </div>
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--primary);"><i class="fa-solid fa-users"></i> DAO Infra</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">Governance contracts & Snapshot space.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Months 2–4</span>
+                    <div style="text-align: right;">
+                        <h2 style="color: var(--text-main); margin: 0; line-height: 1;">$75,000</h2>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">USD · 6-month grant</p>
                     </div>
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--primary);"><i class="fa-solid fa-shield-halved"></i> Security Audit</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">Third-party audits of identity contracts.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Months 3–4</span>
+                </div>
+
+                <div class="glass-table-wrapper" style="margin-top: 16px;">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Work stream</th>
+                                <th>Key deliverable</th>
+                                <th>Timeline</th>
+                                <th style="text-align: right;">Budget</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong style="color: var(--text-main);">Smart contract development</strong></td>
+                                <td><span style="color: var(--text-muted);">ERC-721 identity contract + credential registry on Base Mainnet · IPFS integration via Pinata · QR verification system</span></td>
+                                <td>Month 1–3</td>
+                                <td style="text-align: right; color: var(--text-main);">$18,000</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong style="color: var(--text-main);">Security audit</strong><br>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">Largest single line item</span>
+                                </td>
+                                <td><span style="color: var(--text-muted);">Third-party audit of identity + governance contracts · one remediation cycle · re-audit verification · market rate: $15K–$50K for NFT + governance scope</span></td>
+                                <td>Month 3–4</td>
+                                <td style="text-align: right; color: var(--text-main);">$28,000</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color: var(--text-main);">DAO infrastructure</strong></td>
+                                <td><span style="color: var(--text-muted);">Governance contracts · Snapshot space · Tally integration · Safe multisig 3-of-5 · founding Validator SBT distribution</span></td>
+                                <td>Month 2–4</td>
+                                <td style="text-align: right; color: var(--text-main);">$10,000</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color: var(--text-main);">Pilot deployment</strong></td>
+                                <td><span style="color: var(--text-muted);">500+ pet owners onboarded · 20 Validators certified · first 500 tokens minted on Base · operational QR verification live</span></td>
+                                <td>Month 4–6</td>
+                                <td style="text-align: right; color: var(--text-main);">$8,000</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color: var(--text-main);">Open-source SDK</strong></td>
+                                <td><span style="color: var(--text-muted);">Developer toolkit for third-party builds on PAW Chain identity layer · integration guides for vets, airlines, insurers</span></td>
+                                <td>Month 5–6</td>
+                                <td style="text-align: right; color: var(--text-main);">$7,000</td>
+                            </tr>
+                            <tr>
+                                <td><strong style="color: var(--text-main);">Documentation & research</strong></td>
+                                <td><span style="color: var(--text-muted);">Protocol whitepaper · academic publication (EGADE / Tec de Monterrey) · open-source GitHub · public developer docs</span></td>
+                                <td>Month 6</td>
+                                <td style="text-align: right; color: var(--text-main);">$4,000</td>
+                            </tr>
+                            <tr style="background: rgba(0, 224, 198, 0.1);">
+                                <td>
+                                    <strong style="color: var(--primary); font-size: 1.1rem;">Total</strong><br>
+                                    <span style="font-size: 0.75rem; color: var(--text-muted);">All funds → open-source public goods · no founder compensation · no token issuance</span>
+                                </td>
+                                <td><span style="color: var(--primary);">6-month development cycle · Base Mainnet · open-source · academically validated · Ethereum Foundation ESP</span></td>
+                                <td><strong style="color: var(--primary);">Month 1–6</strong></td>
+                                <td style="text-align: right; font-size: 1.1rem; font-weight: bold; color: var(--primary);">$75,000</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 32px; padding: 24px; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 16px;">
+                    <h4 style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Budget allocation</h4>
+                    <div style="display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin-bottom: 16px; background: rgba(255,255,255,0.05);">
+                        <div style="width: 24%; background: #004D40;" title="Dev 24%"></div>
+                        <div style="width: 37%; background: #00796B;" title="Audit 37%"></div>
+                        <div style="width: 13%; background: #009688;" title="DAO infra 13%"></div>
+                        <div style="width: 11%; background: #26A69A;" title="Pilot 11%"></div>
+                        <div style="width: 9%; background: #4DB6AC;" title="SDK 9%"></div>
+                        <div style="width: 6%; background: #80CBC4;" title="Docs 6%"></div>
                     </div>
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--secondary);"><i class="fa-solid fa-rocket"></i> Pilot Deploy</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">500+ owners, 20 validators onboarded.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Months 4–6</span>
-                    </div>
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--secondary);"><i class="fa-solid fa-box-open"></i> Open-source SDK</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">Developer toolkit for third-party builders.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Months 5–6</span>
-                    </div>
-                    <div class="glass-card" style="padding: 24px; margin-bottom:0;">
-                        <h4 style="color: var(--secondary);"><i class="fa-solid fa-book"></i> Documentation</h4>
-                        <p style="font-size: 0.85rem; margin-bottom: 8px;">Whitepaper & open GitHub repository.</p>
-                        <span style="font-size: 0.75rem; color: var(--accent); font-weight: bold;">Month 6</span>
+                    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 0.8rem; color: var(--text-muted);">
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#004D40; border-radius:2px; margin-right:6px;"></span>Dev 24%</span>
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#00796B; border-radius:2px; margin-right:6px;"></span>Audit 37%</span>
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#009688; border-radius:2px; margin-right:6px;"></span>DAO infra 13%</span>
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#26A69A; border-radius:2px; margin-right:6px;"></span>Pilot 11%</span>
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#4DB6AC; border-radius:2px; margin-right:6px;"></span>SDK 9%</span>
+                        <span style="display: flex; align-items: center;"><span style="display:inline-block; width:10px; height:10px; background:#80CBC4; border-radius:2px; margin-right:6px;"></span>Docs 6%</span>
                     </div>
                 </div>
             </div>
 
             <div class="animate-item" style="animation-delay: 0.3s; margin-top: 40px;">
-                <div class="glass-card" style="background: var(--table-bg); border-color: rgba(98, 126, 234, 0.2);">
-                    <h3 style="margin-bottom: 16px; color: var(--secondary);">7.2 Why Ethereum Foundation ESP</h3>
+                <div class="glass-card" style="background: var(--table-bg); border-color: rgba(0, 224, 198, 0.2);">
+                    <h3 style="margin-bottom: 16px; color: var(--secondary);">Why Ethereum Foundation ESP</h3>
                     <p style="font-size: 0.95rem; margin-bottom: 24px;">PAW Chain is precisely the type of project the Ecosystem Support Program was designed to fund:</p>
                     <div class="grid-2" style="margin-bottom:0;">
                         <div>
@@ -962,67 +1032,81 @@
             </div>
         </div>
 
-        <!-- 8. Why Now. Why Ethereum Tab -->
+        <!-- Community Validation Tab -->
         <div id="conclusion" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-brands fa-ethereum"></i> 8. Why Now. Why Ethereum.</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-check-to-slot"></i> Community Validation — Real Data</h2>
+            <p class="animate-item" style="animation-delay: 0.1s; color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 32px;">Paragraph Proposal · Tally Vote · Live Data</p>
             
-            <div class="grid-2" style="margin-bottom: 40px;">
-                <div class="animate-item" style="animation-delay: 0.1s;">
-                    <p style="font-size: 1.05rem; margin-bottom: 16px;">Latin America's pet economy is growing faster than its digital infrastructure. The coordination problem—fragmented records, unverifiable ownership, trust built on paper—will not be solved by a startup building a proprietary database. It will be solved by open infrastructure that no single actor controls.</p>
-                    <p style="font-size: 1.05rem; margin-bottom: 16px;">Ethereum provides the only credible foundation for that infrastructure: immutable identity, composable credentials, community governance, and a global developer ecosystem. The DAO architecture guarantees the system remains trustworthy even when the founding team is no longer the central actor.</p>
-                    <p style="font-size: 1.05rem;">The Monterrey Innovation District, Tec de Monterrey network, and Mexico's pet owners represent the most favorable adoption environment in LatAm for this protocol.</p>
+            <div class="grid-2 animate-item" style="animation-delay: 0.2s;">
+                <!-- Left Column: Paragraph Proposal -->
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid var(--primary); display: flex; flex-direction: column;">
+                    <h4 style="color: var(--primary); margin-bottom: 16px;">Paragraph Proposal</h4>
+                    <div style="border-radius: 12px; overflow: hidden; border: 1px solid var(--glass-border); background: white; flex-grow: 1; display: flex; flex-direction: column;">
+                        <iframe src="https://paragraph.com/@0x27e9e78897d65d51d05d687fe1269d88c3fa9329/%F0%9F%90%BE-paw-chain-%E2%80%94-la-identidad-digital-de-tu-mascota-para-siempre-en-blockchain" width="100%" style="border: none; flex-grow: 1; min-height: 400px; display: block;"></iframe>
+                    </div>
+                    <a href="https://bit.ly/pawchain-dao" target="_blank" style="display: inline-block; margin-top: 16px; color: var(--secondary); font-size: 0.95rem; text-decoration: underline;">https://bit.ly/pawchain-dao</a>
                 </div>
                 
-                <div class="glass-card animate-item" style="animation-delay: 0.2s; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--table-bg); border-color: var(--primary); height: 100%; margin-bottom:0;">
-                    <h3 class="gradient-text" style="font-size: 2.5rem; margin-bottom: 24px; border: none; padding: 0;">80 million pets in Mexico.</h3>
-                    <h3 style="font-size: 1.5rem; color: #F87171; margin-bottom: 24px;">Zero verifiable identity infrastructure.</h3>
-                    <h3 style="font-size: 1.5rem; color: var(--accent); margin-bottom: 32px;">One open protocol. Built on Ethereum. Governed by the community.</h3>
-                    <p style="font-size: 1.2rem; font-style: italic; color: var(--text-main);">Never lose your pet's story.</p>
+                <!-- Right Column: Voting & QR -->
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid var(--primary); display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="font-style: italic; color: var(--primary); text-align: center; font-family: 'Space Grotesk', sans-serif; margin-bottom: 32px; font-weight: 500;">"Do you support the formal launch of the PAW Chain protocol?"</h3>
+                    
+                    <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap; justify-content: center;">
+                        <!-- Voting Options -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 200px;">
+                            <div class="vote-btn">
+                                <span class="vote-letter">A</span> Yes — I support PIP-000
+                            </div>
+                            <div class="vote-btn">
+                                <span class="vote-letter">B</span> No — I oppose
+                            </div>
+                            <div class="vote-btn">
+                                <span class="vote-letter">C</span> Abstain
+                            </div>
+                        </div>
+                        
+                        <!-- QR Code -->
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-width: 200px;">
+                            <img src="qr_encuesta.jpg" alt="Vote QR" style="width: 140px; height: 140px; object-fit: contain; background: white; padding: 8px; border-radius: 8px; margin-bottom: 16px;">
+                            <strong style="font-size: 0.9rem; color: var(--text-main); line-height: 1.2;">PAW Chain — PIP-000</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Foundational Governance Proposal</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="glass-card animate-item" style="animation-delay: 0.3s; text-align: center; padding: 24px;">
-                <p style="font-size: 1.1rem; color: var(--primary); margin-bottom: 8px;"><strong>All development will be open source. All governance will be on-chain.</strong></p>
-                <p style="font-size: 1.1rem; color: var(--text-muted); margin: 0;">All credentials will be verifiable by any actor, at any time, anywhere.</p>
             </div>
         </div>
 
-        <!-- 9. Founders Tab -->
+        <!-- Founders Tab -->
         <div id="founders" class="tab-pane">
-            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-users"></i> 9. Founding Team</h2>
+            <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-users"></i> Founding Team</h2>
             
             <p class="animate-item" style="animation-delay: 0.1s; margin-bottom: 40px; font-size: 1.05rem;">Meet the members of the EGADE Business School / Tec de Monterrey System team behind PAW Chain.</p>
 
             <div class="grid-3">
-                <!-- Founder 1 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.2s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
                     <img src="tania.jpeg" alt="Tania Cordero" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Tania Cordero</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
                     <a href="https://www.linkedin.com/in/taniacorderoromero/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
-                <!-- Founder 2 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.3s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
-                    <img src="Joel Moreno Gregorio-3.jpg" alt="Joel Moreno" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
+                    <img src="joel.jpeg" alt="Joel Moreno" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Joel Moreno</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
                     <a href="https://www.linkedin.com/in/joel-moreno-a144a371/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
-                <!-- Founder 3 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.4s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
                     <img src="emma.jpeg" alt="Emmanuel Herrera" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Emmanuel Herrera</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
                     <a href="https://www.linkedin.com/in/herrera-emmanuel/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
-                <!-- Founder 4 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.5s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
                     <img src="bren.jpeg" alt="Brenda Meza" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Brenda Meza</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px;">Co-Founder</p>
                     <a href="https://www.linkedin.com/in/brenda-meza-suastegui/" target="_blank" class="btn" style="padding: 8px 16px; font-size: 0.85rem; width: 100%;"><i class="fa-brands fa-linkedin" style="margin-right: 6px;"></i> LinkedIn</a>
                 </div>
-                <!-- Founder 5 -->
                 <div class="glass-card animate-item" style="animation-delay: 0.6s; text-align: center; display: flex; flex-direction: column; align-items: center; padding: 24px;">
                     <img src="jaime.jpeg" alt="Jaime Rendón" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; object-position: center; margin: 0 auto 16px auto; display: block; border: 2px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                     <h4 style="margin-bottom: 4px;">Jaime Rendón</h4>
@@ -1034,7 +1118,6 @@
 
     </main>
 
-    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Tab Switching Logic
