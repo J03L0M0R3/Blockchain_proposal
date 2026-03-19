@@ -258,7 +258,7 @@
         h2 i { margin-right: 12px; color: var(--primary); }
         .subtitle { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin-bottom: 40px; }
         
-        .kpi-value { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; line-height: 1; }
+        .kpi-value { font-size: 2.2rem; font-weight: 800; margin-bottom: 8px; line-height: 1; }
         
         .quote-block {
             border-left: 4px solid var(--primary);
@@ -421,7 +421,6 @@
             <i class="fa-solid fa-paw" style="color: var(--primary);"></i> PAW Chain
         </div>
         <nav class="nav-links">
-            <!-- Changed "Abstract" to "Home" -->
             <button class="tab-btn active" data-target="home">
                 <i class="fa-solid fa-house"></i> Home
             </button>
@@ -482,65 +481,49 @@
         <div id="problem" class="tab-pane">
             <h2 class="animate-item" style="animation-delay: 0s;"><i class="fa-solid fa-triangle-exclamation"></i> Problem Statement</h2>
             
-            <div class="grid-2">
-                <div class="animate-item" style="animation-delay: 0.1s;">
-                    <h3 style="color: var(--primary);">The Coordination Failure</h3>
-                    <p>Mexico has over <strong>80 million pets</strong> (69.8% of households). The pet services market is projected to reach $6.3 billion USD by 2032.</p>
-                    <p>Yet, the information infrastructure is deeply fragmented. Vaccination records get lost. Veterinary histories are siloed within individual clinics. Ownership transfers lack verifiable trails. <strong>Trust is rebuilt from scratch every time.</strong></p>
-                    <div class="glass-card" style="padding: 20px; border-left: 4px solid var(--accent); border-radius: 0 16px 16px 0; margin-top: 24px;">
-                        <p style="margin:0; font-size: 0.95rem; color: var(--text-main);">This is not a data problem. The data exists. It is a coordination problem between multiple actors with different incentives who share no common trust infrastructure.</p>
-                    </div>
-                </div>
+            <div class="animate-item" style="animation-delay: 0.1s; margin-bottom: 32px;">
+                <h3 style="color: var(--primary); margin-bottom: 16px; font-size: 1.8rem;">The Coordination Failure</h3>
                 
-                <div class="animate-item" style="animation-delay: 0.2s;">
-                    <h3 style="color: var(--secondary);">Why Existing Solutions Fail</h3>
-                    <div class="glass-card" style="margin-bottom: 16px;">
-                        <h4 style="color: #F87171;"><i class="fa-solid fa-xmark"></i> Centralized Databases</h4>
-                        <p style="font-size: 0.9rem; margin-bottom:0;">They have a single controller whose incentives do not always align with all actors. They can change access rules, charge fees, be hacked, or shut down. They require everyone to trust the same central authority.</p>
-                    </div>
-                    <div class="glass-card" style="margin-bottom: 0;">
-                        <h4 style="color: var(--accent);"><i class="fa-solid fa-check"></i> DAO-Governed Protocol</h4>
-                        <p style="font-size: 0.9rem; margin-bottom:0;">Rules exist in public, auditable code. No actor controls them unilaterally. Changes require consensus. Functions independent of any company or government.</p>
-                    </div>
+                <div class="glass-card" style="padding: 24px; border-left: 4px solid var(--primary); background: linear-gradient(90deg, rgba(0, 224, 198, 0.08), transparent); margin-bottom: 0;">
+                    <p style="margin: 0 0 12px 0; font-size: 1.1rem; color: var(--text-main); font-weight: 700; letter-spacing: 1px;">
+                        IT'S NOT ABOUT MISSING DATA. IT IS LACK OF A SHARED, VERIFIABLE, AND PORTABLE SYSTEM.
+                    </p>
+                    <p style="font-size: 1.05rem; color: var(--text-muted); margin-bottom: 0; line-height: 1.7;">
+                        Every actor in the pet ecosystem (veterinarians, airlines, PETCO, government entities, adoption agencies) has its own format, its own database, its own seal. None of them trust the others' records. And none of them want a single company to control the system.
+                    </p>
                 </div>
             </div>
 
-            <div class="animate-item" style="animation-delay: 0.3s;">
-                <h3 style="color: var(--primary); margin-top: 24px;">The Travel Clearance Problem</h3>
-                <p>A concrete manifestation: Traveling internationally requires multiple documents from different actors, with different formats, seals, and expiration dates. PAW Chain digitizes them into cryptographically signed credentials verifiable via QR scan.</p>
+            <!-- Market Metrics Grid -->
+            <div class="grid-2 animate-item" style="animation-delay: 0.2s;">
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid var(--primary); display: flex; flex-direction: column; justify-content: center; height: 100%; text-align: center;">
+                    <h3 style="color: var(--primary); font-size: 2.8rem; margin-bottom: 8px; font-weight: 800; line-height: 1;">80M</h3>
+                    <p style="font-size: 1rem; color: var(--text-main); margin-bottom: 4px; font-weight: 600;">pets in Mexico</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">69.8% of households have a pet</p>
+                </div>
+                
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid var(--secondary); display: flex; flex-direction: column; justify-content: center; height: 100%; text-align: center;">
+                    <h3 style="color: var(--secondary); font-size: 2.8rem; margin-bottom: 8px; font-weight: 800; line-height: 1;">$4.5B</h3>
+                    <p style="font-size: 1rem; color: var(--text-main); margin-bottom: 4px; font-weight: 600;">PET Care Market 2025</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">Projected to reach $6.2B by 2032</p>
+                </div>
+            </div>
 
-                <div class="glass-table-wrapper">
-                    <table class="glass-table">
-                        <thead>
-                            <tr>
-                                <th>Document</th>
-                                <th>Today's Fragmented System</th>
-                                <th>PAW Chain Solution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Health certificate</td>
-                                <td>Paper · expires in 15 days · manual process</td>
-                                <td><strong style="color: var(--accent);">On-chain credential</strong> · signed by Validator</td>
-                            </tr>
-                            <tr>
-                                <td>Rabies vaccine</td>
-                                <td>Physical card · easily lost or falsified</td>
-                                <td><strong style="color: var(--accent);">Linked to NFT</strong> · lot number on-chain</td>
-                            </tr>
-                            <tr>
-                                <td>Ownership proof</td>
-                                <td>Verbal or paper-based · no auditable trail</td>
-                                <td><strong style="color: var(--accent);">NFT transfer history</strong> · immutable</td>
-                            </tr>
-                            <tr>
-                                <td>Verification</td>
-                                <td>Manual document review · falsification risk</td>
-                                <td><strong style="color: var(--accent);">QR scan</strong> · on-chain query · seconds</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <!-- Failure Scenarios Grid -->
+            <div class="grid-2 animate-item" style="animation-delay: 0.3s; margin-top: 16px;">
+                <!-- Why Databases Fail -->
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid #F87171; height: 100%;">
+                    <h3 style="color: #F87171; margin-bottom: 16px;"><i class="fa-solid fa-server"></i> Why Databases Fail?</h3>
+                    <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 600; margin-bottom: 12px;">Every centralized system has an owner.</p>
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0; line-height: 1.6;">MX has tried municipal registries, vet chain systems, microchip databases. All failed: a single controller whose incentives don't align with everyone else's.</p>
+                </div>
+
+                <!-- Travel Clearance -->
+                <div class="glass-card" style="padding: 24px; border-top: 4px solid #F59E0B; height: 100%;">
+                    <h3 style="color: #F59E0B; margin-bottom: 16px;"><i class="fa-solid fa-plane-departure"></i> Travel Clearance</h3>
+                    <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 600; margin-bottom: 4px;">SENASICA requires 5 documents. All expire.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px;">Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria</p>
+                    <p style="font-size: 0.95rem; color: var(--text-muted); margin: 0; line-height: 1.6;">Health certificate (15 days) · rabies vaccine record · deworming proof · export certificate · ISO microchip. <strong style="color: var(--text-main);">Paper. Every trip. From scratch.</strong></p>
                 </div>
             </div>
         </div>
